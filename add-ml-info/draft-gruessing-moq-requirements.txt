@@ -1,0 +1,244 @@
+
+
+
+
+AVTCORE/MMUSIC Working Groups                               J. Gruessing
+Internet-Draft                                           12 October 2021
+Intended status: Informational                                          
+Expires: 15 April 2022
+
+
+               Media over QUIC Requirements and Use Cases
+                draft-gruessing-moq-requirements-latest
+
+Abstract
+
+   This document describes the uses cases, requirements, and
+   considerations that should be part of the design of a real-time media
+   protocol over QUIC [RFC9000].
+
+Note to Readers
+
+   _RFC Editor: please remove this section before publication_
+
+   Source code and issues for this draft can be found at
+   https://github.com/fiestajetsam/I-D/tree/main/draft-gruessing-moq-
+   requirements (https://github.com/fiestajetsam/I-D/tree/main/draft-
+   gruessing-moq-requirements).
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at https://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.  It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as "work in progress."
+
+   This Internet-Draft will expire on 15 April 2022.
+
+Copyright Notice
+
+   Copyright (c) 2021 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents (https://trustee.ietf.org/
+   license-info) in effect on the date of publication of this document.
+   Please review these documents carefully, as they describe your rights
+   and restrictions with respect to this document.  Code Components
+   extracted from this document must include Simplified BSD License text
+   as described in Section 4.e of the Trust Legal Provisions and are
+   provided without warranty as described in the Simplified BSD License.
+
+Table of Contents
+
+   1.  Introduction
+   2.  Prior and Existing Specifications
+     2.1.  draft-hurst-quic-rtp-tunnelling
+     2.2.  draft-engelbart-rtp-over-quic
+     2.3.  draft-kpugin-rush
+     2.4.  draft-sharabayko-srt-over-quic
+     2.5.  Comparison of Existing Specifications
+   3.  Use Cases
+   4.  Requirements
+   5.  IANA Considerations
+   6.  Security Considerations
+   7.  References
+     7.1.  Normative References
+     7.2.  Informative References
+   Appendix A.  Acknowledgements
+   Author's Address
+
+1.  Introduction
+
+2.  Prior and Existing Specifications
+
+   Several existing draft specifications and protocols already exist
+   which base their implementation around using existing protocols on
+   top of QUIC, or define their own.  With the exception of RUSH, it is
+   unknown if the other specifications have had any deployments or
+   interop with multiple implementations.
+
+2.1.  draft-hurst-quic-rtp-tunnelling
+
+   QRT encapsulates RTP and RTCP and define the means of using QUIC
+   datagrams with them, defining a new payload within a datagram frame
+   which distinguishes packets for a RTP packet flow vs RTCP.
+
+2.2.  draft-engelbart-rtp-over-quic
+
+   This specification also encapsulates RTP and RTCP but unlike QRT
+   which simply relies on the default QUIC congestion control
+   mechanisms, it defines a set of requirements around QUIC
+   implementation's congestion controller to permit the use of separate
+   control algorithms.
+
+2.3.  draft-kpugin-rush
+
+   RUSH uses its own frame types on top of QUIC as it pre-dates the
+   datagram specification; in addition individual media frames are given
+   their own stream identifiers to remove HoL blocking from processing
+   out-of-order.
+
+   It defines its own registry for signalling codec information with
+   room for future expansion but presently is limited to a subset of
+   popular video and audio codecs and doesn't include other types (such
+   as subtitles, transcriptions, or other signalling information) out of
+   bitstream.
+
+2.4.  draft-sharabayko-srt-over-quic
+
+   SRT [I-D.draft-sharabayko-srt] itself is a general purpose transport
+   protocol primarily for contribution transport use cases and this
+   specification covers the encapsulation and delivery of SRT on top of
+   QUIC using datagram frame types.  This specification sets some
+   requirements regarding how the two interact and leaves considerations
+   for congestion control and pacing to prevent conflict between the two
+   protocols.
+
+2.5.  Comparison of Existing Specifications
+
+   *  Both QRT and the Engelbart draft attempt to use existing payloads
+      of RTP, RTCP, and SDP unlike RUSH and SRT, as well as using
+      existing Datagram frames
+   *  RUSH introduces new frame types as its development pre-dates
+      Datagram frames
+   *  Both QRT and RUSH specify ALPN identification; the Engelbart and
+      SRT drafts do not.
+   *  All drafts take differing approaches to flow/stream identification
+      and management; some address congestion control and others just
+      omit the subject and leave it to QUIC to handle
+
+3.  Use Cases
+
+   For the sake of completeness this is a description of the known use-
+   cases that have been described which would have applicability to the
+   real-time serving of media over QUIC, and MoQ participants should
+   consider which use case(s) should be part of any work, and which can
+   be excluded.  Previously [I-D.draft-rtpfolks-quic-rtp-over-quic]
+   defined several key use cases, in addition to several others which
+   may be summarised under the following:
+
+   1.  Peer-to-peer interactive applications, such as telephony or video
+       conferencing.  This may be in a 1-to-1 scenario, or in a multi-
+       party arrangement.  TODO: add more description here.
+   2.  Unidirectional live stream contribution.  Two immediate scenarios
+       that best describe this is firstly users on a streaming platform
+       in a remote scenario from their phone live streaming an event or
+       going on to an audience in real time in relatively low bitrates
+       (~1-5Mbit).  The second scenario is larger bitrate contribution
+       feeds in broadcast.  This can be an OB feed "back to base" into
+       playout gallery, or from playout facilities to online
+       distribution platforms.
+   3.  Distribution from platform to audience.  Whilst use of WebRTC or
+       RTSP today for On-Demand media streaming is not typical with
+       adaptive streaming like HLS and DASH being predominantly used as
+       WebRTC is more applicable in latency sensitive contexts such as
+       live sporting events.  Instead use cases where there is live
+       streaming of TV linear output, or live streaming such as Twitch
+       or Facebook, or non-UGC services like OTT offerings made by
+       broadcasters.
+
+4.  Requirements
+
+   TODO: Fill this in with detail
+
+5.  IANA Considerations
+
+   This document makes no requests of IANA.
+
+6.  Security Considerations
+
+   As this document is intended to create discussion and consensus and
+   introduces no security considerations of its own.
+
+7.  References
+
+7.1.  Normative References
+
+   [RFC9000]  Iyengar, J., Ed. and M. Thomson, Ed., "QUIC: A UDP-Based
+              Multiplexed and Secure Transport", RFC 9000,
+              DOI 10.17487/RFC9000, May 2021,
+              <https://datatracker.ietf.org/doc/html/rfc9000>.
+
+7.2.  Informative References
+
+   [I-D.draft-engelbart-rtp-over-quic]
+              Ott, J. and M. Engelbart, "RTP over QUIC", Work in
+              Progress, Internet-Draft, draft-engelbart-rtp-over-quic-
+              00, 12 July 2021, <https://datatracker.ietf.org/doc/html/
+              draft-engelbart-rtp-over-quic-00>.
+
+   [I-D.draft-hurst-quic-rtp-tunnelling]
+              Hurst, S., "QRT: QUIC RTP Tunnelling", Work in Progress,
+              Internet-Draft, draft-hurst-quic-rtp-tunnelling-01, 28
+              January 2021, <https://datatracker.ietf.org/doc/html/
+              draft-hurst-quic-rtp-tunnelling-01>.
+
+   [I-D.draft-kpugin-rush]
+              Pugin, K., Frindell, A., Cenzano, J., and J. Weissman,
+              "RUSH - Reliable (unreliable) streaming protocol", Work in
+              Progress, Internet-Draft, draft-kpugin-rush-00, 12 July
+              2021, <https://datatracker.ietf.org/doc/html/draft-kpugin-
+              rush-00>.
+
+   [I-D.draft-rtpfolks-quic-rtp-over-quic]
+              Ott, J., Even, R., Perkins, C., and V. Singh, "RTP over
+              QUIC", Work in Progress, Internet-Draft, draft-rtpfolks-
+              quic-rtp-over-quic-01, 1 September 2017,
+              <https://datatracker.ietf.org/doc/html/draft-rtpfolks-
+              quic-rtp-over-quic-01>.
+
+   [I-D.draft-sharabayko-srt]
+              Sharabayko, M., Sharabayko, M., Dube, J., Kim, J., and J.
+              Kim, "The SRT Protocol", Work in Progress, Internet-Draft,
+              draft-sharabayko-srt-01, 7 September 2021,
+              <https://datatracker.ietf.org/doc/html/draft-sharabayko-
+              srt-01>.
+
+   [I-D.draft-sharabayko-srt-over-quic]
+              Sharabayko, M. and M. Sharabayko, "Tunnelling SRT over
+              QUIC", Work in Progress, Internet-Draft, draft-sharabayko-
+              srt-over-quic-00, 28 July 2021,
+              <https://datatracker.ietf.org/doc/html/draft-sharabayko-
+              srt-over-quic-00>.
+
+Appendix A.  Acknowledgements
+
+   The author would like the thank the many draft authors of various
+   specifications for their work.  The author would also like to thank
+   Francesco Illy and Nicholas Book for their part in providing the
+   needed motivation.
+
+Author's Address
+
+   James Gruessing
+
+   Email: james.ietf@gmail.com
