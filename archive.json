@@ -1,0 +1,250 @@
+{
+  "magic": "E!vIA5L86J2I",
+  "timestamp": "2021-10-14T00:58:59.760277+00:00",
+  "repo": "fiestajetsam/draft-gruessing-moq-requirements",
+  "labels": [
+    {
+      "name": "bug",
+      "description": "Something isn't working",
+      "color": "d73a4a"
+    },
+    {
+      "name": "documentation",
+      "description": "Improvements or additions to documentation",
+      "color": "0075ca"
+    },
+    {
+      "name": "duplicate",
+      "description": "This issue or pull request already exists",
+      "color": "cfd3d7"
+    },
+    {
+      "name": "enhancement",
+      "description": "New feature or request",
+      "color": "a2eeef"
+    },
+    {
+      "name": "help wanted",
+      "description": "Extra attention is needed",
+      "color": "008672"
+    },
+    {
+      "name": "good first issue",
+      "description": "Good for newcomers",
+      "color": "7057ff"
+    },
+    {
+      "name": "invalid",
+      "description": "This doesn't seem right",
+      "color": "e4e669"
+    },
+    {
+      "name": "question",
+      "description": "Further information is requested",
+      "color": "d876e3"
+    },
+    {
+      "name": "wontfix",
+      "description": "This will not be worked on",
+      "color": "ffffff"
+    }
+  ],
+  "issues": [
+    {
+      "number": 1,
+      "id": "I_kwDOGMy9Pc48-wk8",
+      "title": "Distinguish between various classes of latency ",
+      "url": "https://github.com/fiestajetsam/draft-gruessing-moq-requirements/issues/1",
+      "state": "OPEN",
+      "author": "SpencerDawkins",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This might just be \"low-latency\" versus \"not low-latency\", but might also reflect the categories used in https://www.ietf.org/archive/id/draft-ietf-mops-streaming-opcons-07.html#section-3 - that's currently finishing up WGLC, so at least some people think those categories make sense. ",
+      "createdAt": "2021-10-11T19:24:11Z",
+      "updatedAt": "2021-10-11T20:21:43Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 2,
+      "id": "I_kwDOGMy9Pc48-yh2",
+      "title": "Add section for non-requirements",
+      "url": "https://github.com/fiestajetsam/draft-gruessing-moq-requirements/issues/2",
+      "state": "OPEN",
+      "author": "SpencerDawkins",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "A similar section seemed helpful during discussion of https://www.ietf.org/archive/id/draft-ietf-masque-ip-proxy-reqs-03.html\r\n\r\nMy first nominee (and I'll put that in the corresponding PR) is that we're assuming that we're working with existing media transport protocols like RTP and SRP, rather than inventing a new media transport protocol in the IETF, but we can talk when I have text. ",
+      "createdAt": "2021-10-11T20:33:39Z",
+      "updatedAt": "2021-10-11T20:33:39Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 3,
+      "id": "I_kwDOGMy9Pc48-y4w",
+      "title": "Distinguish between lossless and lossy media transport",
+      "url": "https://github.com/fiestajetsam/draft-gruessing-moq-requirements/issues/3",
+      "state": "OPEN",
+      "author": "SpencerDawkins",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "We already have use cases in each category",
+      "createdAt": "2021-10-11T20:35:59Z",
+      "updatedAt": "2021-10-11T20:35:59Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 4,
+      "id": "I_kwDOGMy9Pc48-zOW",
+      "title": "Distinguish between stream and datagram use cases",
+      "url": "https://github.com/fiestajetsam/draft-gruessing-moq-requirements/issues/4",
+      "state": "OPEN",
+      "author": "SpencerDawkins",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This will be easier to get right initially, than to realize that we need to distinguish these use cases later on. ",
+      "createdAt": "2021-10-11T20:37:59Z",
+      "updatedAt": "2021-10-11T20:37:59Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 5,
+      "id": "I_kwDOGMy9Pc48-0SR",
+      "title": "Do we need a common-to-media-transport QUIC datagram multiplexing identifier?",
+      "url": "https://github.com/fiestajetsam/draft-gruessing-moq-requirements/issues/5",
+      "state": "OPEN",
+      "author": "SpencerDawkins",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "At least some of the QUIC datagram proposals assumed they could multiplex different media streams in datagrams on the same QUIC connection.\r\n\r\nhttps://www.ietf.org/archive/id/draft-ietf-quic-datagram-06.html#name-multiplexing-datagrams says, probably correctly, that the QUIC working group couldn't figure out what the identifier would mean in the general case (anything running over QUIC datagrams), and punted to the applications to prefix the datagrams with something meaningful to the applications. \r\n\r\nIf it's possible to add a media-specific, or even an RTP-specific, identifier, that may be worth doing, to allow the same connection to be used by multiple media streams.",
+      "createdAt": "2021-10-11T20:44:32Z",
+      "updatedAt": "2021-10-11T21:38:29Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "fiestajetsam",
+          "authorAssociation": "OWNER",
+          "body": "I think we should have some level of multiplexing available, as use cases would clearly need both audio and video to be sent. The alternatives I see are:\r\n* Use different QUIC connections for audio and video. This seems cumbersome to me in any of our use cases.\r\n* Rely on muxing - e.g. use MPEG2-TS to encapsulate the streams. This adds more overhead onto the connection and also makes it harder for a receiver to negotiate for a subset of the feeds.",
+          "createdAt": "2021-10-11T21:38:29Z",
+          "updatedAt": "2021-10-11T21:38:29Z"
+        }
+      ]
+    },
+    {
+      "number": 6,
+      "id": "I_kwDOGMy9Pc48-2Dl",
+      "title": "Do we need an RTP-equivalent mapping to QUIC, similar to https://datatracker.ietf.org/doc/draft-ietf-quic-http/?",
+      "url": "https://github.com/fiestajetsam/draft-gruessing-moq-requirements/issues/6",
+      "state": "OPEN",
+      "author": "SpencerDawkins",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "ONE of the questions in this direction is \"do some media transport applications require continuous operation during QUIC connection migration?\"",
+      "createdAt": "2021-10-11T20:56:55Z",
+      "updatedAt": "2021-10-11T20:56:55Z",
+      "closedAt": null,
+      "comments": []
+    }
+  ],
+  "pulls": [
+    {
+      "number": 7,
+      "id": "PR_kwDOGMy9Pc4tCfWX",
+      "title": "fix initial build",
+      "url": "https://github.com/fiestajetsam/draft-gruessing-moq-requirements/pull/7",
+      "state": "MERGED",
+      "author": "SpencerDawkins",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2021-10-11T21:13:11Z",
+      "updatedAt": "2021-10-11T21:32:11Z",
+      "baseRepository": "fiestajetsam/draft-gruessing-moq-requirements",
+      "baseRefName": "main",
+      "baseRefOid": "b1342ed7aca84fcbd061eff524940c714c99efb3",
+      "headRepository": "fiestajetsam/draft-gruessing-moq-requirements",
+      "headRefName": "fix-build",
+      "headRefOid": "5b784a0c63dc1fdc99ca96635ab54f9c4b6abd45",
+      "closedAt": "2021-10-11T21:32:06Z",
+      "mergedAt": "2021-10-11T21:32:06Z",
+      "mergedBy": "fiestajetsam",
+      "mergeCommit": {
+        "oid": "eb3cf5ef290d1eef9fac3cb8d4c0ea30588dc217"
+      },
+      "comments": [
+        {
+          "author": "fiestajetsam",
+          "authorAssociation": "OWNER",
+          "body": "Thanks for fixing this!",
+          "createdAt": "2021-10-11T21:31:53Z",
+          "updatedAt": "2021-10-11T21:31:53Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 8,
+      "id": "PR_kwDOGMy9Pc4tHHDk",
+      "title": "Add mailing list info when appropriate",
+      "url": "https://github.com/fiestajetsam/draft-gruessing-moq-requirements/pull/8",
+      "state": "MERGED",
+      "author": "SpencerDawkins",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "I'll let you decide when you want to include this (almost certainly \"not now\", and better after we have more content). I'm just adding this so we don't forget it when we go public. ",
+      "createdAt": "2021-10-12T22:48:54Z",
+      "updatedAt": "2021-10-13T07:42:27Z",
+      "baseRepository": "fiestajetsam/draft-gruessing-moq-requirements",
+      "baseRefName": "main",
+      "baseRefOid": "eb3cf5ef290d1eef9fac3cb8d4c0ea30588dc217",
+      "headRepository": "fiestajetsam/draft-gruessing-moq-requirements",
+      "headRefName": "add-ml-info",
+      "headRefOid": "0077895bbaf691368631e14ba416d1251e46c967",
+      "closedAt": "2021-10-13T07:42:20Z",
+      "mergedAt": "2021-10-13T07:42:20Z",
+      "mergedBy": "fiestajetsam",
+      "mergeCommit": {
+        "oid": "79a48223c87b59b05fbc5c6e79f1e8fc4f1d8be7"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 9,
+      "id": "PR_kwDOGMy9Pc4tKr1L",
+      "title": "Initial work on non-requirements (#2)",
+      "url": "https://github.com/fiestajetsam/draft-gruessing-moq-requirements/pull/9",
+      "state": "OPEN",
+      "author": "fiestajetsam",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "@SpencerDawkins I could also include some other non-requirements into the section if you have some to mind.",
+      "createdAt": "2021-10-13T21:11:27Z",
+      "updatedAt": "2021-10-13T21:11:28Z",
+      "baseRepository": "fiestajetsam/draft-gruessing-moq-requirements",
+      "baseRefName": "main",
+      "baseRefOid": "79a48223c87b59b05fbc5c6e79f1e8fc4f1d8be7",
+      "headRepository": "fiestajetsam/draft-gruessing-moq-requirements",
+      "headRefName": "nonreqs",
+      "headRefOid": "48fccb4618d54da65a3ce3876d47ee9b679a5e4e",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    }
+  ]
+}
