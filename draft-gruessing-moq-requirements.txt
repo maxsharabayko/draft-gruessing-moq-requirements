@@ -3,9 +3,9 @@
 
 
 AVTCORE/MMUSIC Working Groups                               J. Gruessing
-Internet-Draft                                           13 October 2021
+Internet-Draft                                           17 October 2021
 Intended status: Informational                                          
-Expires: 16 April 2022
+Expires: 20 April 2022
 
 
                Media over QUIC Requirements and Use Cases
@@ -41,7 +41,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 16 April 2022.
+   This Internet-Draft will expire on 20 April 2022.
 
 Copyright Notice
 
@@ -68,11 +68,13 @@ Table of Contents
      2.5.  Comparison of Existing Specifications
    3.  Use Cases
    4.  Requirements
-   5.  IANA Considerations
-   6.  Security Considerations
-   7.  References
-     7.1.  Normative References
-     7.2.  Informative References
+   5.  Non-requirements
+     5.1.  Media Transport Protocols
+   6.  IANA Considerations
+   7.  Security Considerations
+   8.  References
+     8.1.  Normative References
+     8.2.  Informative References
    Appendix A.  Acknowledgements
    Author's Address
 
@@ -170,25 +172,39 @@ Table of Contents
 
    TODO: Fill this in with detail
 
-5.  IANA Considerations
+5.  Non-requirements
+
+   This section covers topics that are explicitly out of scope for the
+   time being.
+
+5.1.  Media Transport Protocols
+
+   The creation of new media transport protocols should be avoided, and
+   instead we should make use of RTP [RFC3550] and the existing
+   ecosystem of payload formats and methods of signalling where
+   possible.  It may transpire a need to extend these specificiations;
+   in which case we should work with the relevant working groups and
+   present our use-cases.
+
+6.  IANA Considerations
 
    This document makes no requests of IANA.
 
-6.  Security Considerations
+7.  Security Considerations
 
    As this document is intended to create discussion and consensus and
    introduces no security considerations of its own.
 
-7.  References
+8.  References
 
-7.1.  Normative References
+8.1.  Normative References
 
    [RFC9000]  Iyengar, J., Ed. and M. Thomson, Ed., "QUIC: A UDP-Based
               Multiplexed and Secure Transport", RFC 9000,
               DOI 10.17487/RFC9000, May 2021,
               <https://datatracker.ietf.org/doc/html/rfc9000>.
 
-7.2.  Informative References
+8.2.  Informative References
 
    [I-D.draft-engelbart-rtp-over-quic]
               Ott, J. and M. Engelbart, "RTP over QUIC", Work in
@@ -229,6 +245,12 @@ Table of Contents
               srt-over-quic-00, 28 July 2021,
               <https://datatracker.ietf.org/doc/html/draft-sharabayko-
               srt-over-quic-00>.
+
+   [RFC3550]  Schulzrinne, H., Casner, S., Frederick, R., and V.
+              Jacobson, "RTP: A Transport Protocol for Real-Time
+              Applications", STD 64, RFC 3550, DOI 10.17487/RFC3550,
+              July 2003,
+              <https://datatracker.ietf.org/doc/html/rfc3550>.
 
 Appendix A.  Acknowledgements
 
