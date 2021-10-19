@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2021-10-14T00:58:59.760277+00:00",
+  "timestamp": "2021-10-19T01:03:57.490552+00:00",
   "repo": "fiestajetsam/draft-gruessing-moq-requirements",
   "labels": [
     {
@@ -225,24 +225,26 @@
       "id": "PR_kwDOGMy9Pc4tKr1L",
       "title": "Initial work on non-requirements (#2)",
       "url": "https://github.com/fiestajetsam/draft-gruessing-moq-requirements/pull/9",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "fiestajetsam",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "@SpencerDawkins I could also include some other non-requirements into the section if you have some to mind.",
       "createdAt": "2021-10-13T21:11:27Z",
-      "updatedAt": "2021-10-13T21:11:28Z",
+      "updatedAt": "2021-10-17T11:35:13Z",
       "baseRepository": "fiestajetsam/draft-gruessing-moq-requirements",
       "baseRefName": "main",
       "baseRefOid": "79a48223c87b59b05fbc5c6e79f1e8fc4f1d8be7",
       "headRepository": "fiestajetsam/draft-gruessing-moq-requirements",
       "headRefName": "nonreqs",
       "headRefOid": "48fccb4618d54da65a3ce3876d47ee9b679a5e4e",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2021-10-17T11:35:09Z",
+      "mergedAt": "2021-10-17T11:35:09Z",
+      "mergedBy": "fiestajetsam",
+      "mergeCommit": {
+        "oid": "427dc1f985f5320a98f6051bf90282166cb81a41"
+      },
       "comments": [],
       "reviews": []
     }
