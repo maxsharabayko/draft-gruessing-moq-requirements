@@ -3,9 +3,9 @@
 
 
 AVTCORE/MMUSIC Working Groups                               J. Gruessing
-Internet-Draft                                           17 October 2021
+Internet-Draft                                           21 October 2021
 Intended status: Informational                                          
-Expires: 20 April 2022
+Expires: 24 April 2022
 
 
                Media over QUIC Requirements and Use Cases
@@ -22,9 +22,8 @@ Note to Readers
    _RFC Editor: please remove this section before publication_
 
    Source code and issues for this draft can be found at
-   https://github.com/fiestajetsam/I-D/tree/main/draft-gruessing-moq-
-   requirements (https://github.com/fiestajetsam/I-D/tree/main/draft-
-   gruessing-moq-requirements).
+   https://github.com/fiestajetsam/draft-gruessing-moq-requirements
+   (https://github.com/fiestajetsam/draft-gruessing-moq-requirements).
 
 Status of This Memo
 
@@ -41,7 +40,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 20 April 2022.
+   This Internet-Draft will expire on 24 April 2022.
 
 Copyright Notice
 
@@ -68,8 +67,13 @@ Table of Contents
      2.5.  Comparison of Existing Specifications
    3.  Use Cases
    4.  Requirements
+     4.1.  Codec Agility
+     4.2.  Flow Directionality
+     4.3.  WebTransport
+     4.4.  Authentication
    5.  Non-requirements
      5.1.  Media Transport Protocols
+     5.2.  Multicast
    6.  IANA Considerations
    7.  Security Considerations
    8.  References
@@ -140,18 +144,12 @@ Table of Contents
 
 3.  Use Cases
 
-   For the sake of completeness this is a description of the known use-
-   cases that have been described which would have applicability to the
-   real-time serving of media over QUIC, and MoQ participants should
-   consider which use case(s) should be part of any work, and which can
-   be excluded.  Previously [I-D.draft-rtpfolks-quic-rtp-over-quic]
-   defined several key use cases, in addition to several others which
-   may be summarised under the following:
+   Previously [I-D.draft-rtpfolks-quic-rtp-over-quic] defined several
+   key use cases, in addition to several others defined elsewhere.  The
+   two use cases that are most applicable today given the existing and
+   known future capabilities of QUIC include:
 
-   1.  Peer-to-peer interactive applications, such as telephony or video
-       conferencing.  This may be in a 1-to-1 scenario, or in a multi-
-       party arrangement.  TODO: add more description here.
-   2.  Unidirectional live stream contribution.  Two immediate scenarios
+   1.  Unidirectional live stream contribution.  Two immediate scenarios
        that best describe this is firstly users on a streaming platform
        in a remote scenario from their phone live streaming an event or
        going on to an audience in real time in relatively low bitrates
@@ -159,7 +157,7 @@ Table of Contents
        feeds in broadcast.  This can be an OB feed "back to base" into
        playout gallery, or from playout facilities to online
        distribution platforms.
-   3.  Distribution from platform to audience.  Whilst use of WebRTC or
+   2.  Distribution from platform to audience.  Whilst use of WebRTC or
        RTSP today for On-Demand media streaming is not typical with
        adaptive streaming like HLS and DASH being predominantly used as
        WebRTC is more applicable in latency sensitive contexts such as
@@ -170,7 +168,35 @@ Table of Contents
 
 4.  Requirements
 
-   TODO: Fill this in with detail
+   This section lists requirements for providing real time media
+   streaming over a QUIC connection.
+
+4.1.  Codec Agility
+
+   When initiating a media session, both the sender and receiver should
+   be able to negotiate the codecs, bitrates and other media details
+   based on capabilities and preferences.
+
+4.2.  Flow Directionality
+
+   Media should be able to flow in either direction from client to
+   server or vice-versa, either individually or concurrently.
+
+4.3.  WebTransport
+
+   TODO: Unsure if this should be a requirement.  If it is, we have to
+   consider two things: WebTransport supports HTTP/2, are we going to
+   explicitly exclude it?  Also, WebTransport
+   [I-D.draft-ietf-webtrans-overview] has normative language around
+   congestion control which may be at odds with our potential
+   requirements.
+
+4.4.  Authentication
+
+   The protocol SHOULD have capabilities asides from TLS mutual
+   authentication to allow hosts to authenticate one another, this
+   should be kept simple but robust in nature to prevent attacks like
+   credential brute-forcing.
 
 5.  Non-requirements
 
@@ -186,6 +212,14 @@ Table of Contents
    in which case we should work with the relevant working groups and
    present our use-cases.
 
+5.2.  Multicast
+
+   Even if multicast and other network broadcasting capabilities are
+   used in delivering media in our use cases, as QUIC doesn't yet
+   support it and it's inclusion would require a lot more complexity in
+   both the specification and client implimentation this should be left
+   out for now.
+
 6.  IANA Considerations
 
    This document makes no requests of IANA.
@@ -198,6 +232,12 @@ Table of Contents
 8.  References
 
 8.1.  Normative References
+
+   [I-D.draft-ietf-webtrans-overview]
+              Vasiliev, V., "The WebTransport Protocol Framework", Work
+              in Progress, Internet-Draft, draft-ietf-webtrans-overview-
+              02, 28 July 2021, <https://datatracker.ietf.org/doc/html/
+              draft-ietf-webtrans-overview-02>.
 
    [RFC9000]  Iyengar, J., Ed. and M. Thomson, Ed., "QUIC: A UDP-Based
               Multiplexed and Secure Transport", RFC 9000,
