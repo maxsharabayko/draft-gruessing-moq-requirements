@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2021-10-19T01:03:57.490552+00:00",
+  "timestamp": "2021-10-21T01:06:11.403244+00:00",
   "repo": "fiestajetsam/draft-gruessing-moq-requirements",
   "labels": [
     {
@@ -245,6 +245,32 @@
       "mergeCommit": {
         "oid": "427dc1f985f5320a98f6051bf90282166cb81a41"
       },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 10,
+      "id": "PR_kwDOGMy9Pc4tdc7o",
+      "title": "Further work on requirements and non-requirements...",
+      "url": "https://github.com/fiestajetsam/draft-gruessing-moq-requirements/pull/10",
+      "state": "OPEN",
+      "author": "fiestajetsam",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "This adds a few requirements ripped from my blog post, and cleans out use cases and such.",
+      "createdAt": "2021-10-20T20:40:13Z",
+      "updatedAt": "2021-10-20T20:40:13Z",
+      "baseRepository": "fiestajetsam/draft-gruessing-moq-requirements",
+      "baseRefName": "main",
+      "baseRefOid": "427dc1f985f5320a98f6051bf90282166cb81a41",
+      "headRepository": "fiestajetsam/draft-gruessing-moq-requirements",
+      "headRefName": "restructure",
+      "headRefOid": "f84526a4d0840747eaed2d794e27037581cbb248",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
       "comments": [],
       "reviews": []
     }
