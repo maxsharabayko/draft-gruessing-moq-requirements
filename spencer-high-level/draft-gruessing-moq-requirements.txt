@@ -5,8 +5,8 @@
 AVTCORE/MMUSIC Working Groups                               J. Gruessing
 Internet-Draft                                                          
 Intended status: Informational                                S. Dawkins
-Expires: 24 April 2022                               Tencent America LLC
-                                                         21 October 2021
+Expires: 25 April 2022                               Tencent America LLC
+                                                         22 October 2021
 
 
                Media over QUIC Requirements and Use Cases
@@ -41,7 +41,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 24 April 2022.
+   This Internet-Draft will expire on 25 April 2022.
 
 Copyright Notice
 
@@ -67,6 +67,15 @@ Table of Contents
      2.4.  Tunnelling SRT over QUIC
      2.5.  Comparison of Existing Specifications
    3.  Use Cases
+     3.1.  Use Cases From I-D.draft-rtpfolks-quic-rtp-over-quic
+       3.1.1.  Interactive peer-to-peer applications
+       3.1.2.  Interactive client-server applications
+       3.1.3.  Client-server video on demand applications using WebRTC
+               or RTSP
+       3.1.4.  Live video streaming from a server
+     3.2.  Suggested Use Cases for "Media Over QUIC" Going Forward
+       3.2.1.  Unidirectional live stream contribution
+       3.2.2.  2.  Distribution from platform to audience
    4.  Requirements
      4.1.  Codec Agility
      4.2.  Support a range of Latencies
@@ -75,8 +84,9 @@ Table of Contents
      4.5.  WebTransport
      4.6.  Authentication
    5.  Non-requirements
-     5.1.  Media Transport Protocols
-     5.2.  Multicast
+     5.1.  NAT Traversal
+     5.2.  Media Transport Protocols
+     5.3.  Multicast
    6.  IANA Considerations
    7.  Security Considerations
    8.  References
@@ -86,6 +96,16 @@ Table of Contents
    Authors' Addresses
 
 1.  Introduction
+
+   Protocol developers have been considering the implications of the
+   QUIC protocol ([RFC9000]) on media transport for several years, but
+   the initial focus on QUIC in the IETF was to support web applications
+   that used the HTTP/3 protocol [I-D.draft-ietf-quic-http].  The
+   completion of the initial versions of the QUIC specifications, and
+   the adoption of [I-D.draft-ietf-quic-datagram], have cleared the way
+   for proposals to use QUIC as a media transport.  This document
+   examines proposals that were presented in side meetings at IETF 111,
+   and analyzes them to understand requirements for media over QUIC.
 
 2.  Prior and Existing Specifications
 
@@ -153,7 +173,8 @@ Table of Contents
       and management; some address congestion control and others just
       omit the subject and leave it to QUIC to handle
 
-   TODO: Present this comparison in table format.  This is only a start.
+   *Editor Note:* TODO: Present our comparison in table format.  This is
+   only a start.
 
    +================+========+===============+========+===============+
    | Characteristic | QRT    | RTP over QUIC | RUSH   | SRT over QUIC |
@@ -171,27 +192,84 @@ Table of Contents
 
 3.  Use Cases
 
-   Previously [I-D.draft-rtpfolks-quic-rtp-over-quic] defined several
-   key use cases, in addition to several others defined elsewhere.  The
-   two use cases that are most applicable today given the existing and
-   known future capabilities of QUIC include:
+3.1.  Use Cases From [I-D.draft-rtpfolks-quic-rtp-over-quic]
 
-   1.  Unidirectional live stream contribution.  Two immediate scenarios
-       that best describe this is firstly users on a streaming platform
-       in a remote scenario from their phone live streaming an event or
-       going on to an audience in real time in relatively low bitrates
-       (~1-5Mbit).  The second scenario is larger bitrate contribution
-       feeds in broadcast.  This can be an OB feed "back to base" into
-       playout gallery, or from playout facilities to online
-       distribution platforms.
-   2.  Distribution from platform to audience.  Whilst use of WebRTC or
-       RTSP today for On-Demand media streaming is not typical with
-       adaptive streaming like HLS and DASH being predominantly used as
-       WebRTC is more applicable in latency sensitive contexts such as
-       live sporting events.  Instead use cases where there is live
-       streaming of TV linear output, or live streaming such as Twitch
-       or Facebook, or non-UGC services like OTT offerings made by
-       broadcasters.
+   An early draft in the "media over QUIC" space,
+   [I-D.draft-rtpfolks-quic-rtp-over-quic], defined several key use
+   cases.  The following sections are taken from that draft, with
+   minimal editing.
+
+3.1.1.  Interactive peer-to-peer applications
+
+   Interactive peer-to-peer applications, such as telephony or video
+   conferencing.  Such applications operate in a trapezoid topology
+   using a client-server signalling channel running SIP or WebRTC, and
+   an associated peer-to-peer media path and/or data channel.  Mappings
+   of SIP and WebRTC onto QUIC are possible, but outside the scope of
+   this memo.  It might be desirable to transport the peer-to-peer RTP
+   media path and data channel using QUIC, to leverage QUIC's security,
+   stream demultiplexing, and congestion control features running over a
+   single UDP port.  This would simplify media demultiplexing, and
+   potentially obviate the need for the congestion control work being
+   done in the RMCAT working group.  The design of QUIC makes it
+   difficult however, since QUIC does not support peer-to-peer NAT
+   traversal using STUN and ICE (and indeed uses a packet format that
+   conflicts with STUN).  These applications require low latency
+   congestion control, and would benefit from unreliable delivery modes.
+
+3.1.2.  Interactive client-server applications
+
+   Interactive client-server applications.  For example, a "click here
+   to speak to a representative" button on a website that starts an
+   interactive WebRTC call.  Such applications avoid the NAT traversal
+   issues that complicate peer-to-peer use of QUIC, and can benefit from
+   stream demultiplexing and (if appropriate algorithms are provided)
+   congestion control.  They would benefit from unreliable delivery
+   modes to reduce latency.
+
+3.1.3.  Client-server video on demand applications using WebRTC or RTSP
+
+   Client-server video on demand applications using WebRTC or RTSP.
+   These benefit from QUIC stream demultiplexing in the same way as
+   interactive client-server applications, but with relaxed latency
+   bounds that make them fit better with existing congestion control
+   algorithms and reliable delivery.
+
+3.1.4.  Live video streaming from a server
+
+   Live video streaming from a server can also benefit from stream
+   demultiplexing.  If designed carefully, it should be easier to
+   gateway RTP over QUIC into multicast RTP for scalable delivery than
+   to gateway HTTP adaptive video over QUIC into multicast.
+
+3.2.  Suggested Use Cases for "Media Over QUIC" Going Forward
+
+   The use cases that are most applicable today given the existing and
+   known future capabilities of QUIC are included in this section.
+
+   *Editor Note:* this section is a work in progress, and is based on
+   the opinions of the draft authors.  We are happy to be guided by
+   discussion about other use cases.
+
+3.2.1.  Unidirectional live stream contribution
+
+   Unidirectional live stream contribution.  Two immediate scenarios
+   that best describe this is firstly users on a streaming platform in a
+   remote scenario from their phone live streaming an event or going on
+   to an audience in real time in relatively low bitrates (~1-5Mbit).
+   The second scenario is larger bitrate contribution feeds in
+   broadcast.  This can be an OB feed "back to base" into playout
+   gallery, or from playout facilities to online distribution platforms.
+
+3.2.2.  2.  Distribution from platform to audience
+
+   Distribution from platform to audience.  Whilst use of WebRTC or RTSP
+   today for On-Demand media streaming is not typical with adaptive
+   streaming like HLS and DASH being predominantly used as WebRTC is
+   more applicable in latency sensitive contexts such as live sporting
+   events.  Instead use cases where there is live streaming of TV linear
+   output, or live streaming such as Twitch or Facebook, or non-UGC
+   services like OTT offerings made by broadcasters.
 
 4.  Requirements
 
@@ -248,7 +326,23 @@ Table of Contents
    This section covers topics that are explicitly out of scope for the
    time being.
 
-5.1.  Media Transport Protocols
+5.1.  NAT Traversal
+
+   From Section 8.2 of [RFC9000]:
+
+      Path validation is not designed as a NAT traversal mechanism.
+      Though the mechanism described here might be effective for the
+      creation of NAT bindings that support NAT traversal, the
+      expectation is that one endpoint is able to receive packets
+      without first having sent a packet on that path.  Effective NAT
+      traversal needs additional synchronization mechanisms that are not
+      provided here.
+
+   Although there are use cases that would benefit from a mechanism for
+   NAT traversal, a QUIC protocol extention would be required to support
+   those use cases today.
+
+5.2.  Media Transport Protocols
 
    The creation of new media transport protocols should be avoided, and
    instead we should make use of RTP [RFC3550] and the existing
@@ -257,7 +351,7 @@ Table of Contents
    in which case we should work with the relevant working groups and
    present our use-cases.
 
-5.2.  Multicast
+5.3.  Multicast
 
    Even if multicast and other network broadcasting capabilities are
    used in delivering media in our use cases, as QUIC doesn't yet
@@ -285,6 +379,13 @@ Table of Contents
               September 2021, <https://datatracker.ietf.org/doc/html/
               draft-ietf-mops-streaming-opcons-07>.
 
+   [I-D.draft-ietf-quic-datagram]
+              Pauly, T., Kinnear, E., and D. Schinazi, "An Unreliable
+              Datagram Extension to QUIC", Work in Progress, Internet-
+              Draft, draft-ietf-quic-datagram-06, 5 October 2021,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-quic-
+              datagram-06>.
+
    [I-D.draft-ietf-webtrans-overview]
               Vasiliev, V., "The WebTransport Protocol Framework", Work
               in Progress, Internet-Draft, draft-ietf-webtrans-overview-
@@ -309,6 +410,13 @@ Table of Contents
               Internet-Draft, draft-hurst-quic-rtp-tunnelling-01, 28
               January 2021, <https://datatracker.ietf.org/doc/html/
               draft-hurst-quic-rtp-tunnelling-01>.
+
+   [I-D.draft-ietf-quic-http]
+              Bishop, M., "Hypertext Transfer Protocol Version 3
+              (HTTP/3)", Work in Progress, Internet-Draft, draft-ietf-
+              quic-http-34, 2 February 2021,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-quic-
+              http-34>.
 
    [I-D.draft-kpugin-rush]
               Pugin, K., Frindell, A., Cenzano, J., and J. Weissman,

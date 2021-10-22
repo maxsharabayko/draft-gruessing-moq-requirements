@@ -212,19 +212,6 @@ html {
   --small-font-size: 14.5px;
   scrollbar-color: #bbb #eee;
 }
-@media (prefers-color-scheme: dark) {
-html {
-  --background-color: #121212;
-  --text-color: #f0f0f0;
-  --title-color: #fff;
-  --link-color: #4da4f0;
-  --highlight-color: #282828;
-  --line-color: #444;
-  --pilcrow-weak: #444;
-  --pilcrow-strong: #666;
-  scrollbar-color: #777 #333;
-}
-}
 body {
   max-width: 600px;
   margin: 75px auto;
@@ -443,17 +430,22 @@ figcaption, caption {
   text-align: left;
 }
 @media screen {
-  pre {
+  pre, svg {
     display: inline-block;
     overflow-x: auto;
+  }
+  pre {
     max-width: 100%;
     width: calc(100% - 22px - 1em);
+  }
+  svg {
+    max-width: calc(100% - 22px - 1em);
   }
   figure pre {
     display: block;
     width: calc(100% - 25px);
   }
-  pre + .pilcrow {
+  pre + .pilcrow, svg + .pilcrow {
     display: inline-block;
     vertical-align: text-bottom;
     padding-bottom: 8px;
@@ -1009,6 +1001,34 @@ address div.right {
   font-weight: bold;
   font-size: 0.9em;
 }
+
+/* Dark mode. */
+@media (prefers-color-scheme: dark) {
+html {
+  --background-color: #121212;
+  --text-color: #f0f0f0;
+  --title-color: #fff;
+  --link-color: #4da4f0;
+  --highlight-color: #282828;
+  --line-color: #444;
+  --pilcrow-weak: #444;
+  --pilcrow-strong: #666;
+  scrollbar-color: #777 #333;
+}
+/* Trick: a prefix match works because only black and white are allowed */
+svg [stroke="black"], svg [stroke^="#000"] {
+  stroke: var(--text-color);
+}
+svg [stroke="white"], svg [stroke^="#fff"] {
+  stroke: var(--background-color);
+}
+svg [fill="black"], svg [fill^="#000"], svg :not([fill]) {
+  fill: var(--text-color);
+}
+svg [stroke="fill"], svg [fill^="#fff"] {
+  fill: var(--background-color);
+}
+}
 </style>
 
 </head>
@@ -1021,7 +1041,7 @@ address div.right {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Gruessing &amp; Dawkins</td>
-<td class="center">Expires 24 April 2022</td>
+<td class="center">Expires 25 April 2022</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1034,12 +1054,12 @@ address div.right {
 <dd class="internet-draft">draft-gruessing-moq-requirements-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2021-10-21" class="published">21 October 2021</time>
+<time datetime="2021-10-22" class="published">22 October 2021</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2022-04-24">24 April 2022</time></dd>
+<dd class="expires"><time datetime="2022-04-25">25 April 2022</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1086,7 +1106,7 @@ should be part of the design of a real-time media protocol over QUIC
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 24 April 2022.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 25 April 2022.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1140,6 +1160,36 @@ should be part of the design of a real-time media protocol over QUIC
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3">
             <p id="section-toc.1-1.3.1"><a href="#section-3" class="xref">3</a>.  <a href="#name-use-cases" class="xref">Use Cases</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1">
+                <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="xref">3.1</a>.  <a href="#name-use-cases-from" class="xref">Use Cases From I-D.draft-rtpfolks-quic-rtp-over-quic</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1.2.1">
+                    <p id="section-toc.1-1.3.2.1.2.1.1"><a href="#section-3.1.1" class="xref">3.1.1</a>.  <a href="#name-interactive-peer-to-peer-ap" class="xref">Interactive peer-to-peer applications</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1.2.2">
+                    <p id="section-toc.1-1.3.2.1.2.2.1"><a href="#section-3.1.2" class="xref">3.1.2</a>.  <a href="#name-interactive-client-server-a" class="xref">Interactive client-server applications</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1.2.3">
+                    <p id="section-toc.1-1.3.2.1.2.3.1"><a href="#section-3.1.3" class="xref">3.1.3</a>.  <a href="#name-client-server-video-on-dema" class="xref">Client-server video on demand applications using WebRTC or RTSP</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1.2.4">
+                    <p id="section-toc.1-1.3.2.1.2.4.1"><a href="#section-3.1.4" class="xref">3.1.4</a>.  <a href="#name-live-video-streaming-from-a" class="xref">Live video streaming from a server</a></p>
+</li>
+                </ul>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2">
+                <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="xref">3.2</a>.  <a href="#name-suggested-use-cases-for-med" class="xref">Suggested Use Cases for "Media Over QUIC" Going Forward</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2.2.1">
+                    <p id="section-toc.1-1.3.2.2.2.1.1"><a href="#section-3.2.1" class="xref">3.2.1</a>.  <a href="#name-unidirectional-live-stream-" class="xref">Unidirectional live stream contribution</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2.2.2">
+                    <p id="section-toc.1-1.3.2.2.2.2.1"><a href="#section-3.2.2" class="xref">3.2.2</a>.  <a href="#name-2-distribution-from-platfor" class="xref">2. Distribution from platform to audience</a></p>
+</li>
+                </ul>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
             <p id="section-toc.1-1.4.1"><a href="#section-4" class="xref">4</a>.  <a href="#name-requirements" class="xref">Requirements</a></p>
@@ -1168,10 +1218,13 @@ should be part of the design of a real-time media protocol over QUIC
             <p id="section-toc.1-1.5.1"><a href="#section-5" class="xref">5</a>.  <a href="#name-non-requirements" class="xref">Non-requirements</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1">
-                <p id="section-toc.1-1.5.2.1.1"><a href="#section-5.1" class="xref">5.1</a>.  <a href="#name-media-transport-protocols" class="xref">Media Transport Protocols</a></p>
+                <p id="section-toc.1-1.5.2.1.1"><a href="#section-5.1" class="xref">5.1</a>.  <a href="#name-nat-traversal" class="xref">NAT Traversal</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.2">
-                <p id="section-toc.1-1.5.2.2.1"><a href="#section-5.2" class="xref">5.2</a>.  <a href="#name-multicast" class="xref">Multicast</a></p>
+                <p id="section-toc.1-1.5.2.2.1"><a href="#section-5.2" class="xref">5.2</a>.  <a href="#name-media-transport-protocols" class="xref">Media Transport Protocols</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.3">
+                <p id="section-toc.1-1.5.2.3.1"><a href="#section-5.3" class="xref">5.3</a>.  <a href="#name-multicast" class="xref">Multicast</a></p>
 </li>
             </ul>
 </li>
@@ -1206,7 +1259,8 @@ should be part of the design of a real-time media protocol over QUIC
 <section id="section-1">
       <h2 id="name-introduction">
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
-    </h2>
+      </h2>
+<p id="section-1-1">Protocol developers have been considering the implications of the QUIC protocol (<span>[<a href="#RFC9000" class="xref">RFC9000</a>]</span>) on media transport for several years, but the initial focus on QUIC in the IETF was to support web applications that used the HTTP/3 protocol <span>[<a href="#I-D.draft-ietf-quic-http" class="xref">I-D.draft-ietf-quic-http</a>]</span>. The completion of the initial versions of the QUIC specifications, and the adoption of <span>[<a href="#I-D.draft-ietf-quic-datagram" class="xref">I-D.draft-ietf-quic-datagram</a>]</span>, have cleared the way for proposals to use QUIC as a media transport. This document examines proposals that were presented in side meetings at IETF 111, and analyzes them to understand requirements for media over QUIC.<a href="#section-1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="priorart">
@@ -1288,7 +1342,7 @@ management; some address congestion control and others just omit the subject
 and leave it to QUIC to handle<a href="#section-2.5-1.4" class="pilcrow">¶</a>
 </li>
         </ul>
-<p id="section-2.5-2">TODO: Present this comparison in table format. This is only a start.<a href="#section-2.5-2" class="pilcrow">¶</a></p>
+<p id="section-2.5-2"><strong>Editor Note:</strong> TODO: Present our comparison in table format. This is only a start.<a href="#section-2.5-2" class="pilcrow">¶</a></p>
 <table class="center" id="table-1">
           <caption><a href="#table-1" class="selfRef">Table 1</a></caption>
 <thead>
@@ -1340,26 +1394,81 @@ and leave it to QUIC to handle<a href="#section-2.5-1.4" class="pilcrow">¶</a>
       <h2 id="name-use-cases">
 <a href="#section-3" class="section-number selfRef">3. </a><a href="#name-use-cases" class="section-name selfRef">Use Cases</a>
       </h2>
-<p id="section-3-1">Previously <span>[<a href="#I-D.draft-rtpfolks-quic-rtp-over-quic" class="xref">I-D.draft-rtpfolks-quic-rtp-over-quic</a>]</span> defined several key use
-cases, in addition to several others defined elsewhere. The two use cases that
-are most applicable today given the existing and known future capabilities of
-QUIC include:<a href="#section-3-1" class="pilcrow">¶</a></p>
-<ol start="1" type="1" class="compact type-1" id="section-3-2">
-<li id="section-3-2.1">Unidirectional live stream contribution. Two immediate scenarios that
+<div id="use-cases-from-i-ddraft-rtpfolks-quic-rtp-over-quic">
+<section id="section-3.1">
+        <h3 id="name-use-cases-from">
+<a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-use-cases-from" class="section-name selfRef">Use Cases From <em class="xref">[I-D.draft-rtpfolks-quic-rtp-over-quic]</em></a>
+        </h3>
+<p id="section-3.1-1">An early draft in the "media over QUIC" space, <span>[<a href="#I-D.draft-rtpfolks-quic-rtp-over-quic" class="xref">I-D.draft-rtpfolks-quic-rtp-over-quic</a>]</span>, defined several key use cases. The following sections are taken from that draft, with minimal editing.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
+<div id="interactive-peer-to-peer-applications">
+<section id="section-3.1.1">
+          <h4 id="name-interactive-peer-to-peer-ap">
+<a href="#section-3.1.1" class="section-number selfRef">3.1.1. </a><a href="#name-interactive-peer-to-peer-ap" class="section-name selfRef">Interactive peer-to-peer applications</a>
+          </h4>
+<p id="section-3.1.1-1">Interactive peer-to-peer applications, such as telephony or video conferencing.  Such applications operate in a trapezoid topology using a client-server signalling channel running SIP or WebRTC,  and an associated peer-to-peer media path and/or data channel. Mappings of SIP and WebRTC onto QUIC are possible, but outside the scope of this memo.  It might be desirable to transport the peer-to-peer RTP media path and data channel using QUIC, to leverage QUIC's security, stream demultiplexing, and congestion control features running over a single UDP port. This would simplify media demultiplexing, and potentially obviate the need for the congestion control work being done in the RMCAT working group.  The design of QUIC makes it difficult however, since QUIC does not support peer-to-peer NAT traversal using STUN and ICE (and indeed uses a packet format that conflicts with STUN). These applications require low latency congestion control, and would benefit from unreliable delivery modes.<a href="#section-3.1.1-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="interactive-client-server-applications">
+<section id="section-3.1.2">
+          <h4 id="name-interactive-client-server-a">
+<a href="#section-3.1.2" class="section-number selfRef">3.1.2. </a><a href="#name-interactive-client-server-a" class="section-name selfRef">Interactive client-server applications</a>
+          </h4>
+<p id="section-3.1.2-1">Interactive client-server applications. For example, a "click here to speak to a representative" button on a website that starts an interactive WebRTC call.  Such applications avoid the NAT traversal issues that complicate peer-to-peer use of QUIC, and can benefit from stream demultiplexing and (if appropriate algorithms are provided) congestion control.  They would benefit from unreliable delivery modes to reduce latency.<a href="#section-3.1.2-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="client-server-video-on-demand-applications-using-webrtc-or-rtsp">
+<section id="section-3.1.3">
+          <h4 id="name-client-server-video-on-dema">
+<a href="#section-3.1.3" class="section-number selfRef">3.1.3. </a><a href="#name-client-server-video-on-dema" class="section-name selfRef">Client-server video on demand applications using WebRTC or RTSP</a>
+          </h4>
+<p id="section-3.1.3-1">Client-server video on demand applications using WebRTC or RTSP. These benefit from QUIC stream demultiplexing in the same way as interactive client-server applications, but with relaxed latency bounds that make them fit better with existing congestion control algorithms and reliable delivery.<a href="#section-3.1.3-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="live-video-streaming-from-a-server">
+<section id="section-3.1.4">
+          <h4 id="name-live-video-streaming-from-a">
+<a href="#section-3.1.4" class="section-number selfRef">3.1.4. </a><a href="#name-live-video-streaming-from-a" class="section-name selfRef">Live video streaming from a server</a>
+          </h4>
+<p id="section-3.1.4-1">Live video streaming from a server can also benefit from stream demultiplexing.  If designed carefully, it should be easier to gateway RTP over QUIC into multicast RTP for scalable delivery than to gateway HTTP adaptive video over QUIC into multicast.<a href="#section-3.1.4-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="suggested-use-cases-for-media-over-quic-going-forward">
+<section id="section-3.2">
+        <h3 id="name-suggested-use-cases-for-med">
+<a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-suggested-use-cases-for-med" class="section-name selfRef">Suggested Use Cases for "Media Over QUIC" Going Forward</a>
+        </h3>
+<p id="section-3.2-1">The use cases that are most applicable today given the existing and known future capabilities of QUIC are included in this section.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
+<p id="section-3.2-2"><strong>Editor Note:</strong> this section is a work in progress, and is based on the opinions of the draft authors. We are happy to be guided by discussion about other use cases.<a href="#section-3.2-2" class="pilcrow">¶</a></p>
+<div id="unidirectional-live-stream-contribution">
+<section id="section-3.2.1">
+          <h4 id="name-unidirectional-live-stream-">
+<a href="#section-3.2.1" class="section-number selfRef">3.2.1. </a><a href="#name-unidirectional-live-stream-" class="section-name selfRef">Unidirectional live stream contribution</a>
+          </h4>
+<p id="section-3.2.1-1">Unidirectional live stream contribution. Two immediate scenarios that
 best describe this is firstly users on a streaming platform in a remote scenario
 from their phone live streaming an event or going on to an audience in real time
 in relatively low bitrates (~1-5Mbit). The second scenario is larger bitrate
 contribution feeds in broadcast. This can be an OB feed "back to base" into
-playout gallery, or from playout facilities to online distribution platforms.<a href="#section-3-2.1" class="pilcrow">¶</a>
-</li>
-        <li id="section-3-2.2">Distribution from platform to audience. Whilst use of WebRTC or RTSP today
+playout gallery, or from playout facilities to online distribution platforms.<a href="#section-3.2.1-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="distribution-from-platform-to-audience">
+<section id="section-3.2.2">
+          <h4 id="name-2-distribution-from-platfor">
+<a href="#section-3.2.2" class="section-number selfRef">3.2.2. </a><a href="#name-2-distribution-from-platfor" class="section-name selfRef">2. Distribution from platform to audience</a>
+          </h4>
+<p id="section-3.2.2-1">Distribution from platform to audience. Whilst use of WebRTC or RTSP today
 for On-Demand media streaming is not typical with adaptive streaming like HLS
 and DASH being predominantly used as WebRTC is more applicable in latency
 sensitive contexts such as live sporting events. Instead use cases where there
 is live streaming of TV linear output, or live streaming such as Twitch or
-Facebook, or non-UGC services like OTT offerings made by broadcasters.<a href="#section-3-2.2" class="pilcrow">¶</a>
-</li>
-      </ol>
+Facebook, or non-UGC services like OTT offerings made by broadcasters.<a href="#section-3.2.2-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
 </section>
 </div>
 <div id="requirements">
@@ -1444,27 +1553,41 @@ in nature to prevent attacks like credential brute-forcing.<a href="#section-4.6
 <a href="#section-5" class="section-number selfRef">5. </a><a href="#name-non-requirements" class="section-name selfRef">Non-requirements</a>
       </h2>
 <p id="section-5-1">This section covers topics that are explicitly out of scope for the time being.<a href="#section-5-1" class="pilcrow">¶</a></p>
-<div id="media-transport-protocols">
+<div id="nat-traversal">
 <section id="section-5.1">
-        <h3 id="name-media-transport-protocols">
-<a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-media-transport-protocols" class="section-name selfRef">Media Transport Protocols</a>
+        <h3 id="name-nat-traversal">
+<a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-nat-traversal" class="section-name selfRef">NAT Traversal</a>
         </h3>
-<p id="section-5.1-1">The creation of new media transport protocols should be avoided, and instead we
+<p id="section-5.1-1">From Section 8.2 of <span>[<a href="#RFC9000" class="xref">RFC9000</a>]</span>:<a href="#section-5.1-1" class="pilcrow">¶</a></p>
+<ul class="normal ulEmpty">
+<li class="normal ulEmpty" id="section-5.1-2.1">
+            <p id="section-5.1-2.1.1">Path validation is not designed as a NAT traversal mechanism. Though the mechanism described here might be effective for the creation of NAT bindings that support NAT traversal, the expectation is that one endpoint is able to receive packets without first having sent a packet on that path. Effective NAT traversal needs additional synchronization mechanisms that are not provided here.<a href="#section-5.1-2.1.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+<p id="section-5.1-3">Although there are use cases that would benefit from a mechanism for NAT traversal, a QUIC protocol extention would be required to support those use cases today.<a href="#section-5.1-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="media-transport-protocols">
+<section id="section-5.2">
+        <h3 id="name-media-transport-protocols">
+<a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-media-transport-protocols" class="section-name selfRef">Media Transport Protocols</a>
+        </h3>
+<p id="section-5.2-1">The creation of new media transport protocols should be avoided, and instead we
 should make use of RTP <span>[<a href="#RFC3550" class="xref">RFC3550</a>]</span> and the existing ecosystem of payload formats
 and methods of signalling where possible. It may transpire a need to extend
 these specificiations; in which case we should work with the relevant working
-groups and present our use-cases.<a href="#section-5.1-1" class="pilcrow">¶</a></p>
+groups and present our use-cases.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="multicast">
-<section id="section-5.2">
+<section id="section-5.3">
         <h3 id="name-multicast">
-<a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-multicast" class="section-name selfRef">Multicast</a>
+<a href="#section-5.3" class="section-number selfRef">5.3. </a><a href="#name-multicast" class="section-name selfRef">Multicast</a>
         </h3>
-<p id="section-5.2-1">Even if multicast and other network broadcasting capabilities are used in
+<p id="section-5.3-1">Even if multicast and other network broadcasting capabilities are used in
 delivering media in our use cases, as QUIC doesn't yet support it and it's
 inclusion would require a lot more complexity in both the specification and
-client implimentation this should be left out for now.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
+client implimentation this should be left out for now.<a href="#section-5.3-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1499,6 +1622,10 @@ no security considerations of its own.<a href="#section-7-1" class="pilcrow">¶<
         <dd>
 <span class="refAuthor">Holland, J.</span>, <span class="refAuthor">Begen, A.</span>, and <span class="refAuthor">S. Dawkins</span>, <span class="refTitle">"Operational Considerations for Streaming Media"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-mops-streaming-opcons-07</span>, <time datetime="2021-09-14" class="refDate">14 September 2021</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-mops-streaming-opcons-07">https://datatracker.ietf.org/doc/html/draft-ietf-mops-streaming-opcons-07</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="I-D.draft-ietf-quic-datagram">[I-D.draft-ietf-quic-datagram]</dt>
+        <dd>
+<span class="refAuthor">Pauly, T.</span>, <span class="refAuthor">Kinnear, E.</span>, and <span class="refAuthor">D. Schinazi</span>, <span class="refTitle">"An Unreliable Datagram Extension to QUIC"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-quic-datagram-06</span>, <time datetime="2021-10-05" class="refDate">5 October 2021</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-quic-datagram-06">https://datatracker.ietf.org/doc/html/draft-ietf-quic-datagram-06</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="I-D.draft-ietf-webtrans-overview">[I-D.draft-ietf-webtrans-overview]</dt>
         <dd>
 <span class="refAuthor">Vasiliev, V.</span>, <span class="refTitle">"The WebTransport Protocol Framework"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-webtrans-overview-02</span>, <time datetime="2021-07-28" class="refDate">28 July 2021</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-webtrans-overview-02">https://datatracker.ietf.org/doc/html/draft-ietf-webtrans-overview-02</a>&gt;</span>. </dd>
@@ -1521,6 +1648,10 @@ no security considerations of its own.<a href="#section-7-1" class="pilcrow">¶<
 <dt id="I-D.draft-hurst-quic-rtp-tunnelling">[I-D.draft-hurst-quic-rtp-tunnelling]</dt>
         <dd>
 <span class="refAuthor">Hurst, S.</span>, <span class="refTitle">"QRT: QUIC RTP Tunnelling"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-hurst-quic-rtp-tunnelling-01</span>, <time datetime="2021-01-28" class="refDate">28 January 2021</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-hurst-quic-rtp-tunnelling-01">https://datatracker.ietf.org/doc/html/draft-hurst-quic-rtp-tunnelling-01</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="I-D.draft-ietf-quic-http">[I-D.draft-ietf-quic-http]</dt>
+        <dd>
+<span class="refAuthor">Bishop, M.</span>, <span class="refTitle">"Hypertext Transfer Protocol Version 3 (HTTP/3)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-quic-http-34</span>, <time datetime="2021-02-02" class="refDate">2 February 2021</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-quic-http-34">https://datatracker.ietf.org/doc/html/draft-ietf-quic-http-34</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.draft-kpugin-rush">[I-D.draft-kpugin-rush]</dt>
         <dd>
