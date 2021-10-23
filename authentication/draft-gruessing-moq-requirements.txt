@@ -9,7 +9,7 @@ Expires: 26 April 2022                               Tencent America LLC
                                                          23 October 2021
 
 
-               Media over QUIC Requirements and Use Cases
+          Media over RTP over QUIC Requirements and Use Cases
                 draft-gruessing-moq-requirements-latest
 
 Abstract
@@ -79,10 +79,11 @@ Table of Contents
    4.  Requirements
      4.1.  Codec Agility
      4.2.  Support a range of Latencies
-     4.3.  Support Lossless and Lossy Media Transport
-     4.4.  Flow Directionality
-     4.5.  WebTransport
-     4.6.  Authentication
+     4.3.  Congestion Control
+     4.4.  Support Lossless and Lossy Media Transport
+     4.5.  Flow Directionality
+     4.6.  WebTransport
+     4.7.  Authentication
    5.  Non-requirements
      5.1.  NAT Traversal
      5.2.  Media Transport Protocols
@@ -294,18 +295,23 @@ Table of Contents
    *  non-low-latency live (10 seconds to a few minutes)
    *  on-demand (hours or more)
 
-4.3.  Support Lossless and Lossy Media Transport
+4.3.  Congestion Control
+
+   TODO: Confirm these requirements, consider looking at how RFC 8836
+   applies to this requirement.
+
+4.4.  Support Lossless and Lossy Media Transport
 
    TODO: confirm scope of this draft to describe lossless media
    transport, lossy media transport, or both lossless and lossy
    transport.
 
-4.4.  Flow Directionality
+4.5.  Flow Directionality
 
    Media should be able to flow in either direction from client to
    server or vice-versa, either individually or concurrently.
 
-4.5.  WebTransport
+4.6.  WebTransport
 
    TODO: Unsure if this should be a requirement.  If it is, we have to
    consider two things: WebTransport supports HTTP/2, are we going to
@@ -314,7 +320,7 @@ Table of Contents
    congestion control which may be at odds with our potential
    requirements.
 
-4.6.  Authentication
+4.7.  Authentication
 
    The protocol SHOULD have capabilities beyond what QUIC provides to
    allow hosts to authenticate one another, this should be kept simple
@@ -375,26 +381,18 @@ Table of Contents
 8.1.  Normative References
 
    [I-D.draft-ietf-mops-streaming-opcons]
-              Holland, J., Begen, A., and S. Dawkins, "Operational
-              Considerations for Streaming Media", Work in Progress,
-              Internet-Draft, draft-ietf-mops-streaming-opcons-07, 14
-              September 2021, <https://datatracker.ietf.org/doc/html/
-              draft-ietf-mops-streaming-opcons-07>.
+              "*** BROKEN REFERENCE ***".
 
    [I-D.draft-ietf-quic-datagram]
-              Pauly, T., Kinnear, E., and D. Schinazi, "An Unreliable
-              Datagram Extension to QUIC", Work in Progress, Internet-
-              Draft, draft-ietf-quic-datagram-06, 5 October 2021,
-              <https://datatracker.ietf.org/doc/html/draft-ietf-quic-
-              datagram-06>.
+              "*** BROKEN REFERENCE ***".
 
    [I-D.draft-ietf-webtrans-overview]
-              Vasiliev, V., "The WebTransport Protocol Framework", Work
-              in Progress, Internet-Draft, draft-ietf-webtrans-overview-
-              02, 28 July 2021, <https://datatracker.ietf.org/doc/html/
-              draft-ietf-webtrans-overview-02>.
+              "*** BROKEN REFERENCE ***".
 
-   [RFC9000]  "*** BROKEN REFERENCE ***".
+   [RFC9000]  Iyengar, J., Ed. and M. Thomson, Ed., "QUIC: A UDP-Based
+              Multiplexed and Secure Transport", RFC 9000,
+              DOI 10.17487/RFC9000, May 2021,
+              <https://datatracker.ietf.org/doc/html/rfc9000>.
 
 8.2.  Informative References
 

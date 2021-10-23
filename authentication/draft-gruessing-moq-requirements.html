@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta content="Common,Latin" name="scripts">
 <meta content="initial-scale=1.0" name="viewport">
-<title>Media over QUIC Requirements and Use Cases</title>
+<title>Media over RTP over QUIC Requirements and Use Cases</title>
 <meta content="James Gruessing" name="author">
 <meta content="Spencer Dawkins" name="author">
 <meta content="
@@ -1072,7 +1072,7 @@ svg [stroke="fill"], svg [fill^="#fff"] {
 </dd>
 </dl>
 </div>
-<h1 id="title">Media over QUIC Requirements and Use Cases</h1>
+<h1 id="title">Media over RTP over QUIC Requirements and Use Cases</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
 <p id="section-abstract-1">This document describes the uses cases, requirements, and considerations that
@@ -1201,16 +1201,19 @@ protocol operating over QUIC <span>[<a href="#RFC9000" class="xref">RFC9000</a>]
                 <p id="section-toc.1-1.4.2.2.1"><a href="#section-4.2" class="xref">4.2</a>.  <a href="#name-support-a-range-of-latencie" class="xref">Support a range of Latencies</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.3">
-                <p id="section-toc.1-1.4.2.3.1"><a href="#section-4.3" class="xref">4.3</a>.  <a href="#name-support-lossless-and-lossy-" class="xref">Support Lossless and Lossy Media Transport</a></p>
+                <p id="section-toc.1-1.4.2.3.1"><a href="#section-4.3" class="xref">4.3</a>.  <a href="#name-congestion-control" class="xref">Congestion Control</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.4">
-                <p id="section-toc.1-1.4.2.4.1"><a href="#section-4.4" class="xref">4.4</a>.  <a href="#name-flow-directionality" class="xref">Flow Directionality</a></p>
+                <p id="section-toc.1-1.4.2.4.1"><a href="#section-4.4" class="xref">4.4</a>.  <a href="#name-support-lossless-and-lossy-" class="xref">Support Lossless and Lossy Media Transport</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.5">
-                <p id="section-toc.1-1.4.2.5.1"><a href="#section-4.5" class="xref">4.5</a>.  <a href="#name-webtransport" class="xref">WebTransport</a></p>
+                <p id="section-toc.1-1.4.2.5.1"><a href="#section-4.5" class="xref">4.5</a>.  <a href="#name-flow-directionality" class="xref">Flow Directionality</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.6">
-                <p id="section-toc.1-1.4.2.6.1"><a href="#section-4.6" class="xref">4.6</a>.  <a href="#name-authentication" class="xref">Authentication</a></p>
+                <p id="section-toc.1-1.4.2.6.1"><a href="#section-4.6" class="xref">4.6</a>.  <a href="#name-webtransport" class="xref">WebTransport</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.7">
+                <p id="section-toc.1-1.4.2.7.1"><a href="#section-4.7" class="xref">4.7</a>.  <a href="#name-authentication" class="xref">Authentication</a></p>
 </li>
             </ul>
 </li>
@@ -1507,43 +1510,52 @@ preferences.<a href="#section-4.1-1" class="pilcrow">¶</a></p>
         </ul>
 </section>
 </div>
-<div id="support-lossless-and-lossy-media-transport">
+<div id="congestion-control">
 <section id="section-4.3">
-        <h3 id="name-support-lossless-and-lossy-">
-<a href="#section-4.3" class="section-number selfRef">4.3. </a><a href="#name-support-lossless-and-lossy-" class="section-name selfRef">Support Lossless and Lossy Media Transport</a>
+        <h3 id="name-congestion-control">
+<a href="#section-4.3" class="section-number selfRef">4.3. </a><a href="#name-congestion-control" class="section-name selfRef">Congestion Control</a>
         </h3>
-<p id="section-4.3-1">TODO: confirm scope of this draft to describe lossless media transport, lossy media transport, or both lossless and lossy transport.<a href="#section-4.3-1" class="pilcrow">¶</a></p>
+<p id="section-4.3-1">TODO: Confirm these requirements, consider looking at how RFC 8836 applies to
+this requirement.<a href="#section-4.3-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="support-lossless-and-lossy-media-transport">
+<section id="section-4.4">
+        <h3 id="name-support-lossless-and-lossy-">
+<a href="#section-4.4" class="section-number selfRef">4.4. </a><a href="#name-support-lossless-and-lossy-" class="section-name selfRef">Support Lossless and Lossy Media Transport</a>
+        </h3>
+<p id="section-4.4-1">TODO: confirm scope of this draft to describe lossless media transport, lossy media transport, or both lossless and lossy transport.<a href="#section-4.4-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="flow-directionality">
-<section id="section-4.4">
+<section id="section-4.5">
         <h3 id="name-flow-directionality">
-<a href="#section-4.4" class="section-number selfRef">4.4. </a><a href="#name-flow-directionality" class="section-name selfRef">Flow Directionality</a>
+<a href="#section-4.5" class="section-number selfRef">4.5. </a><a href="#name-flow-directionality" class="section-name selfRef">Flow Directionality</a>
         </h3>
-<p id="section-4.4-1">Media should be able to flow in either direction from client to server or
-vice-versa, either individually or concurrently.<a href="#section-4.4-1" class="pilcrow">¶</a></p>
+<p id="section-4.5-1">Media should be able to flow in either direction from client to server or
+vice-versa, either individually or concurrently.<a href="#section-4.5-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="webtransport">
-<section id="section-4.5">
+<section id="section-4.6">
         <h3 id="name-webtransport">
-<a href="#section-4.5" class="section-number selfRef">4.5. </a><a href="#name-webtransport" class="section-name selfRef">WebTransport</a>
+<a href="#section-4.6" class="section-number selfRef">4.6. </a><a href="#name-webtransport" class="section-name selfRef">WebTransport</a>
         </h3>
-<p id="section-4.5-1">TODO: Unsure if this should be a requirement. If it is, we have to consider two
+<p id="section-4.6-1">TODO: Unsure if this should be a requirement. If it is, we have to consider two
 things: WebTransport supports HTTP/2, are we going to explicitly exclude it?
 Also, WebTransport <span>[<a href="#I-D.draft-ietf-webtrans-overview" class="xref">I-D.draft-ietf-webtrans-overview</a>]</span> has normative language
-around congestion control which may be at odds with our potential requirements.<a href="#section-4.5-1" class="pilcrow">¶</a></p>
+around congestion control which may be at odds with our potential requirements.<a href="#section-4.6-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="authentication">
-<section id="section-4.6">
+<section id="section-4.7">
         <h3 id="name-authentication">
-<a href="#section-4.6" class="section-number selfRef">4.6. </a><a href="#name-authentication" class="section-name selfRef">Authentication</a>
+<a href="#section-4.7" class="section-number selfRef">4.7. </a><a href="#name-authentication" class="section-name selfRef">Authentication</a>
         </h3>
-<p id="section-4.6-1">The protocol SHOULD have capabilities beyond what QUIC provides to allow hosts
+<p id="section-4.7-1">The protocol SHOULD have capabilities beyond what QUIC provides to allow hosts
 to authenticate one another, this should be kept simple but robust in nature to
-prevent attacks like credential brute-forcing.<a href="#section-4.6-1" class="pilcrow">¶</a></p>
-<p id="section-4.6-2">TODO: More details are required here<a href="#section-4.6-2" class="pilcrow">¶</a></p>
+prevent attacks like credential brute-forcing.<a href="#section-4.7-1" class="pilcrow">¶</a></p>
+<p id="section-4.7-2">TODO: More details are required here<a href="#section-4.7-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1621,19 +1633,19 @@ no security considerations of its own.<a href="#section-7-1" class="pilcrow">¶<
 <dl class="references">
 <dt id="I-D.draft-ietf-mops-streaming-opcons">[I-D.draft-ietf-mops-streaming-opcons]</dt>
         <dd>
-<span class="refAuthor">Holland, J.</span>, <span class="refAuthor">Begen, A.</span>, and <span class="refAuthor">S. Dawkins</span>, <span class="refTitle">"Operational Considerations for Streaming Media"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-mops-streaming-opcons-07</span>, <time datetime="2021-09-14" class="refDate">14 September 2021</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-mops-streaming-opcons-07">https://datatracker.ietf.org/doc/html/draft-ietf-mops-streaming-opcons-07</a>&gt;</span>. </dd>
+<span class="refTitle">"*** BROKEN REFERENCE ***"</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.draft-ietf-quic-datagram">[I-D.draft-ietf-quic-datagram]</dt>
         <dd>
-<span class="refAuthor">Pauly, T.</span>, <span class="refAuthor">Kinnear, E.</span>, and <span class="refAuthor">D. Schinazi</span>, <span class="refTitle">"An Unreliable Datagram Extension to QUIC"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-quic-datagram-06</span>, <time datetime="2021-10-05" class="refDate">5 October 2021</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-quic-datagram-06">https://datatracker.ietf.org/doc/html/draft-ietf-quic-datagram-06</a>&gt;</span>. </dd>
+<span class="refTitle">"*** BROKEN REFERENCE ***"</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.draft-ietf-webtrans-overview">[I-D.draft-ietf-webtrans-overview]</dt>
         <dd>
-<span class="refAuthor">Vasiliev, V.</span>, <span class="refTitle">"The WebTransport Protocol Framework"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-webtrans-overview-02</span>, <time datetime="2021-07-28" class="refDate">28 July 2021</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-webtrans-overview-02">https://datatracker.ietf.org/doc/html/draft-ietf-webtrans-overview-02</a>&gt;</span>. </dd>
+<span class="refTitle">"*** BROKEN REFERENCE ***"</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC9000">[RFC9000]</dt>
       <dd>
-<span class="refTitle">"*** BROKEN REFERENCE ***"</span>. </dd>
+<span class="refAuthor">Iyengar, J., Ed.</span> and <span class="refAuthor">M. Thomson, Ed.</span>, <span class="refTitle">"QUIC: A UDP-Based Multiplexed and Secure Transport"</span>, <span class="seriesInfo">RFC 9000</span>, <span class="seriesInfo">DOI 10.17487/RFC9000</span>, <time datetime="2021-05" class="refDate">May 2021</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/rfc9000">https://datatracker.ietf.org/doc/html/rfc9000</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
