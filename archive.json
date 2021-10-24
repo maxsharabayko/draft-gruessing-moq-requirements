@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2021-10-21T01:06:11.403244+00:00",
+  "timestamp": "2021-10-24T01:00:31.002646+00:00",
   "repo": "fiestajetsam/draft-gruessing-moq-requirements",
   "labels": [
     {
@@ -153,6 +153,84 @@
       "updatedAt": "2021-10-11T20:56:55Z",
       "closedAt": null,
       "comments": []
+    },
+    {
+      "number": 11,
+      "id": "I_kwDOGMy9Pc49kIOr",
+      "title": "Clear focus on the purpose of this document",
+      "url": "https://github.com/fiestajetsam/draft-gruessing-moq-requirements/issues/11",
+      "state": "OPEN",
+      "author": "SpencerDawkins",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "We have been talking about \"Media Over QUIC\" as a broad term that would include any media transport protocol running over QUIC, which (apparently) would include \r\n\r\n- RTP over QUIC\r\n- SRP over QUIC\r\n- RUSH, which runs over QUIC\r\n\r\nIf we are doing \"Media over QUIC\", all of these (and potentially others) would be in scope. If the scope of this document is \"Media over RTP over QUIC\", that would be fine, but we should say that.\r\n\r\nThoughts?",
+      "createdAt": "2021-10-21T19:46:29Z",
+      "updatedAt": "2021-10-21T19:46:29Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 12,
+      "id": "I_kwDOGMy9Pc49kKNf",
+      "title": "\"Media Transport Protocol\" terminology",
+      "url": "https://github.com/fiestajetsam/draft-gruessing-moq-requirements/issues/12",
+      "state": "OPEN",
+      "author": "SpencerDawkins",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "I THINK what we are doing, is roughly \r\n\r\n- Start with current \"Media - Media Transport Protocol\", where \"Media Transport Protocol\" might be RTP\r\n- Encapsulate in QUIC, to give \"Media - Media Transport Protocol - QUIC\"\r\n\r\nIf that's right, we should be using \"Media Transport Protocol\" to describe the first layer under \"Media\", and what we're doing might better be described as something like \"Media Transport Protocol Encapsulation\" (\"in QUIC\"). \r\n\r\nWhatever we choose, we should be consistent - the Abstract says \r\n\r\n> This document describes the uses cases, requirements, and considerations that should be part of the design of a real-time media protocol over QUIC [RFC9000].\r\n\r\nwhich would make me believe that we're designing a replacement for existing media transport protocols, but then under \"Non-requirements, we have \r\n\r\n> The creation of new media transport protocols should be avoided, and instead we should make use of RTP [RFC3550] and the existing ecosystem of payload formats and methods of signalling where possible. \r\n\r\nI think that the second quote is correct, so we just need to be clearer in the first quote. ",
+      "createdAt": "2021-10-21T19:57:42Z",
+      "updatedAt": "2021-10-22T23:14:17Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "fiestajetsam",
+          "authorAssociation": "OWNER",
+          "body": "I agree with this, and it should be fixed. Would you like me to clean it up or do you want to roll it in with other changes?",
+          "createdAt": "2021-10-21T22:18:23Z",
+          "updatedAt": "2021-10-21T22:18:23Z"
+        },
+        {
+          "author": "SpencerDawkins",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Hi, @fiestajetsam, would it be OK if you did this cleanup? I think adding the picture of the two protocol stacks, in some form, will be super helpful for readers. ",
+          "createdAt": "2021-10-22T23:14:17Z",
+          "updatedAt": "2021-10-22T23:14:17Z"
+        }
+      ]
+    },
+    {
+      "number": 13,
+      "id": "I_kwDOGMy9Pc49kMkP",
+      "title": "\"Authentication\" was unclear for me",
+      "url": "https://github.com/fiestajetsam/draft-gruessing-moq-requirements/issues/13",
+      "state": "OPEN",
+      "author": "SpencerDawkins",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "I needed a bit more context for this: \r\n\r\n> The protocol SHOULD have capabilities asides from TLS mutual authentication to allow hosts to authenticate one another, this should be kept simple but robust in nature to prevent attacks like credential brute-forcing.\r\n\r\nI'm probably confused by \"The protocol\". \r\n\r\nhttps://www.rfc-editor.org/rfc/rfc9000.html#name-cryptographic-and-transport says it provides this authentication using TLS 1.3 handshake. Are you thinking of \r\n\r\n- something in addition to the QUIC cryptographic handshake? \r\n- (Assuming the definition of \"Media Transport Protocol\" in #12), something provided by the Media Transport Protocol level? \r\n- Or something else? ",
+      "createdAt": "2021-10-21T20:09:24Z",
+      "updatedAt": "2021-10-22T20:54:59Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "fiestajetsam",
+          "authorAssociation": "OWNER",
+          "body": "Something in addition to the QUIC cryptographic handshake (in which I am talking about TLS  mutual authentication here, where client presents a valid certificate to server, and verifies the server certificate). Consider:\r\n\r\n* Existing protocols in this space usually offer some \"shared secret\" of some variety as part of either/or an authentication  handshake, and encryption of media:\r\n  * [RTMP \"session keys\"](https://www.adobe.com/content/dam/acom/en/devnet/rtmp/pdf/rtmp_specification_1.0.pdf) which are just secret values set in the `tcUrl` field during connection handshake\r\n  * [RIST Main Profile's use of TLS SRP](https://vsf.tv/download/technical_recommendations/VSF_TR-06-2_2021-04-26.pdf) (see \u00a7 6.4) - but note they also support a cert-based approach which more closely matches TLS mutual auth\r\n  * [SRT Standard keys](https://github.com/Haivision/srt/blob/master/docs/features/access-control.md#standard-keys) where the Stream ID and user define the authorisation\r\n* Before RIST Main profile there hasn't been a need for a lot of certificate-based authentication and so existing folk in field would use these types of shared secret patterns, and that having to keep PKI for devices may be problematic. Consider things like encoding hardware deployed in remote locations.\r\n\r\nOther options could be considered, like using a more SIP-like approach, but we would have to be careful not to bring the rest of the SIP kitchen sink with its round peg that might not fit in the square QUIC slot.\r\n\r\nI get this requirement presently is a bit flaky in part because the requirements are a bit unclear. Perhaps I put a little more description on the requirement, or remove it from the draft now, and leave it for a \"ask later\". Thoughts?",
+          "createdAt": "2021-10-21T20:58:04Z",
+          "updatedAt": "2021-10-21T20:58:04Z"
+        },
+        {
+          "author": "SpencerDawkins",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@fiestajetsam, I think (1) adding the explanation that this is beyond the authentication mechanism provided by QUIC, and (2) leaving it in the draft, with a note that more detail is needed, and will be added as discussion proceeds, is all that's needed for now.",
+          "createdAt": "2021-10-22T20:54:59Z",
+          "updatedAt": "2021-10-22T20:54:59Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -253,20 +331,86 @@
       "id": "PR_kwDOGMy9Pc4tdc7o",
       "title": "Further work on requirements and non-requirements...",
       "url": "https://github.com/fiestajetsam/draft-gruessing-moq-requirements/pull/10",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "fiestajetsam",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "This adds a few requirements ripped from my blog post, and cleans out use cases and such.",
       "createdAt": "2021-10-20T20:40:13Z",
-      "updatedAt": "2021-10-20T20:40:13Z",
+      "updatedAt": "2021-10-21T15:32:24Z",
       "baseRepository": "fiestajetsam/draft-gruessing-moq-requirements",
       "baseRefName": "main",
       "baseRefOid": "427dc1f985f5320a98f6051bf90282166cb81a41",
       "headRepository": "fiestajetsam/draft-gruessing-moq-requirements",
       "headRefName": "restructure",
       "headRefOid": "f84526a4d0840747eaed2d794e27037581cbb248",
+      "closedAt": "2021-10-21T15:28:52Z",
+      "mergedAt": "2021-10-21T15:28:52Z",
+      "mergedBy": "SpencerDawkins",
+      "mergeCommit": {
+        "oid": "2cf080d38b10819e6f4d77000408a01a683c07c6"
+      },
+      "comments": [
+        {
+          "author": "SpencerDawkins",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I have some thoughts about the content of this PR, but let's merge it, and see if my thoughts turn into text :-)",
+          "createdAt": "2021-10-21T15:28:40Z",
+          "updatedAt": "2021-10-21T15:28:40Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 14,
+      "id": "PR_kwDOGMy9Pc4tkjbx",
+      "title": "Various updates, mostly just getting organized. ",
+      "url": "https://github.com/fiestajetsam/draft-gruessing-moq-requirements/pull/14",
+      "state": "MERGED",
+      "author": "SpencerDawkins",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2021-10-22T23:11:26Z",
+      "updatedAt": "2021-10-23T08:28:18Z",
+      "baseRepository": "fiestajetsam/draft-gruessing-moq-requirements",
+      "baseRefName": "main",
+      "baseRefOid": "2cf080d38b10819e6f4d77000408a01a683c07c6",
+      "headRepository": "fiestajetsam/draft-gruessing-moq-requirements",
+      "headRefName": "spencer-high-level",
+      "headRefOid": "cdf9d1d307d9c154117a5c89787649dd3338f363",
+      "closedAt": "2021-10-23T08:28:15Z",
+      "mergedAt": "2021-10-23T08:28:15Z",
+      "mergedBy": "fiestajetsam",
+      "mergeCommit": {
+        "oid": "c305f01ffdfed423d7efd29504fba3cdc3f2f1ef"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 15,
+      "id": "PR_kwDOGMy9Pc4tk8Je",
+      "title": "Further work and changes",
+      "url": "https://github.com/fiestajetsam/draft-gruessing-moq-requirements/pull/15",
+      "state": "OPEN",
+      "author": "fiestajetsam",
+      "authorAssociation": "OWNER",
+      "assignees": [
+        "SpencerDawkins"
+      ],
+      "labels": [],
+      "body": "",
+      "createdAt": "2021-10-23T10:26:59Z",
+      "updatedAt": "2021-10-23T10:26:59Z",
+      "baseRepository": "fiestajetsam/draft-gruessing-moq-requirements",
+      "baseRefName": "main",
+      "baseRefOid": "c305f01ffdfed423d7efd29504fba3cdc3f2f1ef",
+      "headRepository": "fiestajetsam/draft-gruessing-moq-requirements",
+      "headRefName": "authentication",
+      "headRefOid": "95856d34c5114686f0b5e6100d45afc979429a6f",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
