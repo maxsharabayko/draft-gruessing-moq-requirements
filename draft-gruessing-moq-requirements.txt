@@ -5,18 +5,18 @@
 AVTCORE/MMUSIC Working Groups                               J. Gruessing
 Internet-Draft                                                          
 Intended status: Informational                                S. Dawkins
-Expires: 27 April 2022                               Tencent America LLC
-                                                         24 October 2021
+Expires: 28 April 2022                               Tencent America LLC
+                                                         25 October 2021
 
 
-          Media over RTP over QUIC Requirements and Use Cases
+   QUIC Encapsulation for Media over RTP - Requirements and Use Cases
                 draft-gruessing-moq-requirements-latest
 
 Abstract
 
    This document describes the uses cases, requirements, and
-   considerations that should be form the design of the encapsulation of
-   a real-time media transport protocol operating over QUIC [RFC9000].
+   considerations that should guide the design of the encapsulation of a
+   real-time media transport protocol as a payload in the QUIC protocol.
 
 Note to Readers
 
@@ -41,7 +41,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 27 April 2022.
+   This Internet-Draft will expire on 28 April 2022.
 
 Copyright Notice
 
@@ -60,43 +60,49 @@ Copyright Notice
 Table of Contents
 
    1.  Introduction
-   2.  Prior and Existing Specifications
-     2.1.  QRT: QUIC RTP Tunnelling
-     2.2.  RTP over QUIC
-     2.3.  RUSH - Reliable (unreliable) streaming protocol
-     2.4.  Tunnelling SRT over QUIC
-     2.5.  Comparison of Existing Specifications
-   3.  Use Cases
-     3.1.  Use Cases From I-D.draft-rtpfolks-quic-rtp-over-quic
-       3.1.1.  Interactive peer-to-peer applications
-       3.1.2.  Interactive client-server applications
-       3.1.3.  Client-server video on demand applications using WebRTC
+   2.  Terminology
+   3.  Prior and Existing Specifications
+     3.1.  QRT: QUIC RTP Tunnelling
+     3.2.  RTP over QUIC
+     3.3.  RUSH - Reliable (unreliable) streaming protocol
+     3.4.  Tunnelling SRT over QUIC
+     3.5.  Comparison of Existing Specifications
+   4.  Use Cases
+     4.1.  Use Cases From I-D.draft-rtpfolks-quic-rtp-over-quic
+       4.1.1.  Interactive peer-to-peer applications
+       4.1.2.  Interactive client-server applications
+       4.1.3.  Client-server video on demand applications using WebRTC
                or RTSP
-       3.1.4.  Live video streaming from a server
-     3.2.  Suggested Use Cases for "Media Over QUIC" Going Forward
-       3.2.1.  Unidirectional live stream contribution
-       3.2.2.  2.  Distribution from platform to audience
-   4.  Requirements
-     4.1.  Codec Agility
-     4.2.  Support a range of Latencies
-     4.3.  Congestion Control
-     4.4.  Support Lossless and Lossy Media Transport
-     4.5.  Flow Directionality
-     4.6.  WebTransport
-     4.7.  Authentication
-   5.  Non-requirements
-     5.1.  NAT Traversal
-     5.2.  Media Transport Protocols
-     5.3.  Multicast
-   6.  IANA Considerations
-   7.  Security Considerations
-   8.  References
-     8.1.  Normative References
-     8.2.  Informative References
+       4.1.4.  Live video streaming from a server
+     4.2.  Suggested Use Cases for "Media Over QUIC" Going Forward
+       4.2.1.  Unidirectional live stream contribution
+       4.2.2.  Distribution from platform to audience
+   5.  Requirements
+     5.1.  Codec Agility
+     5.2.  Support a range of Latencies
+     5.3.  Congestion Control
+     5.4.  Support Lossless and Lossy Media Transport
+     5.5.  Flow Directionality
+     5.6.  WebTransport
+     5.7.  Authentication
+   6.  Non-requirements
+     6.1.  NAT Traversal
+     6.2.  New Media Transport Protocols
+     6.3.  Multicast
+   7.  IANA Considerations
+   8.  Security Considerations
+   9.  References
+     9.1.  Normative References
+     9.2.  Informative References
    Appendix A.  Acknowledgements
    Authors' Addresses
 
 1.  Introduction
+
+   This document describes the uses cases, requirements, and
+   considerations that should guide the design of the encapsulation of a
+   real-time media transport protocol as a payload in the the QUIC
+   protocol [RFC9000].
 
    Protocol developers have been considering the implications of the
    QUIC protocol ([RFC9000]) on media transport for several years, but
@@ -105,18 +111,29 @@ Table of Contents
    completion of the initial versions of the QUIC specifications, and
    the adoption of [I-D.draft-ietf-quic-datagram], have cleared the way
    for proposals to use QUIC as a media transport.  This document
-   examines proposals that were presented in side meetings at IETF 111,
-   and analyzes them to understand requirements for media over QUIC.
+   considers a number of proposals for "Media Over QUIC", and analyzes
+   them to understand requirements and considerations.
 
-2.  Prior and Existing Specifications
+2.  Terminology
+
+   For the purposes of this document, it is assumed that we are starting
+   with a protocol stack that looks like this:
+
+       Media Transport Protocol | Media
+
+   and the goal is to provide a protocol stack that looks like this:
+
+       QUIC | Media Transport Protocol | Media
+
+3.  Prior and Existing Specifications
 
    Several existing draft specifications and protocols already exist
-   which base their implementation around using existing protocols on
-   top of QUIC, or define their own.  With the exception of RUSH, it is
-   unknown if the other specifications have had any deployments or
-   interop with multiple implementations.
+   which base their implementation around using existing Media Transport
+   Protocols on top of QUIC, or define their own.  With the exception of
+   RUSH (Section 3.3), it is unknown if the other specifications have
+   had any deployments or interop with multiple implementations.
 
-2.1.  QRT: QUIC RTP Tunnelling
+3.1.  QRT: QUIC RTP Tunnelling
 
    [I-D.draft-hurst-quic-rtp-tunnelling]
 
@@ -124,7 +141,7 @@ Table of Contents
    datagrams with them, defining a new payload within a datagram frame
    which distinguishes packets for a RTP packet flow vs RTCP.
 
-2.2.  RTP over QUIC
+3.2.  RTP over QUIC
 
    [I-D.draft-engelbart-rtp-over-quic]
 
@@ -134,7 +151,7 @@ Table of Contents
    implementation's congestion controller to permit the use of separate
    control algorithms.
 
-2.3.  RUSH - Reliable (unreliable) streaming protocol
+3.3.  RUSH - Reliable (unreliable) streaming protocol
 
    [I-D.draft-kpugin-rush]
 
@@ -149,7 +166,7 @@ Table of Contents
    as subtitles, transcriptions, or other signalling information) out of
    bitstream.
 
-2.4.  Tunnelling SRT over QUIC
+3.4.  Tunnelling SRT over QUIC
 
    [I-D.draft-sharabayko-srt-over-quic]
 
@@ -161,46 +178,29 @@ Table of Contents
    and leaves considerations for congestion control and pacing to
    prevent conflict between the two protocols.
 
-2.5.  Comparison of Existing Specifications
+3.5.  Comparison of Existing Specifications
 
    *  Both QRT and the Engelbart draft attempt to use existing payloads
       of RTP, RTCP, and SDP unlike RUSH and SRT, as well as using
       existing Datagram frames
    *  RUSH introduces new frame types as its development pre-dates
       Datagram frames
-   *  Both QRT and RUSH specify ALPN identification; the Engelbart and
-      SRT drafts do not.
    *  All drafts take differing approaches to flow/stream identification
       and management; some address congestion control and others just
       omit the subject and leave it to QUIC to handle
+   *  Both QRT and RUSH specify ALPN identification; the Engelbart and
+      SRT drafts do not.
 
-   *Editor Note:* TODO: Present our comparison in table format.  This is
-   only a start.
+4.  Use Cases
 
-   +================+========+===============+========+===============+
-   | Characteristic | QRT    | RTP over QUIC | RUSH   | SRT over QUIC |
-   +================+========+===============+========+===============+
-   | Framing        | RTP    | RTP           | RUSH   | SRT           |
-   +----------------+--------+---------------+--------+---------------+
-   | Stream/Dgram   | Stream | Dgram         | Stream | Dgram         |
-   +----------------+--------+---------------+--------+---------------+
-   | CC             | RTP    | RTP           | QUIC   | QUIC          |
-   +----------------+--------+---------------+--------+---------------+
-   | ALPN           | Yes    | No            | Yes    | No            |
-   +----------------+--------+---------------+--------+---------------+
-
-                                 Table 1
-
-3.  Use Cases
-
-3.1.  Use Cases From [I-D.draft-rtpfolks-quic-rtp-over-quic]
+4.1.  Use Cases From [I-D.draft-rtpfolks-quic-rtp-over-quic]
 
    An early draft in the "media over QUIC" space,
    [I-D.draft-rtpfolks-quic-rtp-over-quic], defined several key use
    cases.  The following sections are taken from that draft, with
    minimal editing.
 
-3.1.1.  Interactive peer-to-peer applications
+4.1.1.  Interactive peer-to-peer applications
 
    Interactive peer-to-peer applications, such as telephony or video
    conferencing.  Such applications operate in a trapezoid topology
@@ -218,7 +218,7 @@ Table of Contents
    conflicts with STUN).  These applications require low latency
    congestion control, and would benefit from unreliable delivery modes.
 
-3.1.2.  Interactive client-server applications
+4.1.2.  Interactive client-server applications
 
    Interactive client-server applications.  For example, a "click here
    to speak to a representative" button on a website that starts an
@@ -228,7 +228,7 @@ Table of Contents
    congestion control.  They would benefit from unreliable delivery
    modes to reduce latency.
 
-3.1.3.  Client-server video on demand applications using WebRTC or RTSP
+4.1.3.  Client-server video on demand applications using WebRTC or RTSP
 
    Client-server video on demand applications using WebRTC or RTSP.
    These benefit from QUIC stream demultiplexing in the same way as
@@ -236,14 +236,14 @@ Table of Contents
    bounds that make them fit better with existing congestion control
    algorithms and reliable delivery.
 
-3.1.4.  Live video streaming from a server
+4.1.4.  Live video streaming from a server
 
    Live video streaming from a server can also benefit from stream
    demultiplexing.  If designed carefully, it should be easier to
    gateway RTP over QUIC into multicast RTP for scalable delivery than
    to gateway HTTP adaptive video over QUIC into multicast.
 
-3.2.  Suggested Use Cases for "Media Over QUIC" Going Forward
+4.2.  Suggested Use Cases for "Media Over QUIC" Going Forward
 
    The use cases that are most applicable today given the existing and
    known future capabilities of QUIC are included in this section.
@@ -252,7 +252,7 @@ Table of Contents
    the opinions of the draft authors.  We are happy to be guided by
    discussion about other use cases.
 
-3.2.1.  Unidirectional live stream contribution
+4.2.1.  Unidirectional live stream contribution
 
    Unidirectional live stream contribution.  Two immediate scenarios
    that best describe this is firstly users on a streaming platform in a
@@ -262,7 +262,7 @@ Table of Contents
    broadcast.  This can be an OB feed "back to base" into playout
    gallery, or from playout facilities to online distribution platforms.
 
-3.2.2.  2.  Distribution from platform to audience
+4.2.2.  Distribution from platform to audience
 
    Distribution from platform to audience.  Whilst use of WebRTC or RTSP
    today for On-Demand media streaming is not typical with adaptive
@@ -272,18 +272,27 @@ Table of Contents
    output, or live streaming such as Twitch or Facebook, or non-UGC
    services like OTT offerings made by broadcasters.
 
-4.  Requirements
+5.  Requirements
 
-   This section lists requirements for providing real time media
-   streaming over a QUIC connection.
+   Even a cursory examination of the existing proposals listed in
+   Section 3 shows that there are fundamental differences in the
+   approaches being used - for instance, whether a proposal uses RTP as
+   its Media Transport Protocol.
 
-4.1.  Codec Agility
+   In this section, we attempt to focus on high-level requirements for
+   real time media streaming over a QUIC connection, recognizing that
+
+   *  additional analysis will be required, and
+   *  we are starting with requirements that are apparent for RTP-based
+      proposals
+
+5.1.  Codec Agility
 
    When initiating a media session, both the sender and receiver should
    be able to negotiate the codecs, bitrates and other media details
    based on capabilities and preferences.
 
-4.2.  Support a range of Latencies
+5.2.  Support a range of Latencies
 
    TODO: confirm requirements for latency
 
@@ -295,23 +304,23 @@ Table of Contents
    *  non-low-latency live (10 seconds to a few minutes)
    *  on-demand (hours or more)
 
-4.3.  Congestion Control
+5.3.  Congestion Control
 
    TODO: Confirm these requirements, consider looking at how RFC 8836
    applies to this requirement.
 
-4.4.  Support Lossless and Lossy Media Transport
+5.4.  Support Lossless and Lossy Media Transport
 
    TODO: confirm scope of this draft to describe lossless media
    transport, lossy media transport, or both lossless and lossy
    transport.
 
-4.5.  Flow Directionality
+5.5.  Flow Directionality
 
    Media should be able to flow in either direction from client to
    server or vice-versa, either individually or concurrently.
 
-4.6.  WebTransport
+5.6.  WebTransport
 
    TODO: Unsure if this should be a requirement.  If it is, we have to
    consider two things: WebTransport supports HTTP/2, are we going to
@@ -320,21 +329,21 @@ Table of Contents
    congestion control which may be at odds with our potential
    requirements.
 
-4.7.  Authentication
+5.7.  Authentication
 
-   The protocol SHOULD have capabilities beyond what QUIC provides to
-   allow hosts to authenticate one another, this should be kept simple
-   but robust in nature to prevent attacks like credential brute-
+   The encapsulation SHOULD have capabilities beyond what QUIC provides
+   to allow hosts to authenticate one another, this should be kept
+   simple but robust in nature to prevent attacks like credential brute-
    forcing.
 
    TODO: More details are required here
 
-5.  Non-requirements
+6.  Non-requirements
 
    This section covers topics that are explicitly out of scope for the
    time being.
 
-5.1.  NAT Traversal
+6.1.  NAT Traversal
 
    From Section 8.2 of [RFC9000]:
 
@@ -350,35 +359,35 @@ Table of Contents
    NAT traversal, a QUIC protocol extention would be required to support
    those use cases today.
 
-5.2.  Media Transport Protocols
+6.2.  New Media Transport Protocols
 
    The creation of new media transport protocols should be avoided, and
    instead we should make use of RTP [RFC3550] and the existing
    ecosystem of payload formats and methods of signalling where
-   possible.  It may transpire a need to extend these specificiations;
-   in which case we should work with the relevant working groups and
-   present our use-cases.
+   possible.  Work on QUIC encapsulation may reveal a need to extend
+   these specificiations; in which case we should work with the relevant
+   working groups and present our use-cases.
 
-5.3.  Multicast
+6.3.  Multicast
 
    Even if multicast and other network broadcasting capabilities are
-   used in delivering media in our use cases, as QUIC doesn't yet
-   support it and it's inclusion would require a lot more complexity in
-   both the specification and client implimentation this should be left
-   out for now.
+   often used in delivering media in our use cases, QUIC doesn't yet
+   support multicast, and would require a QUIC protocol extension to do
+   so.  In addition, the inclusion of multicast would introduce more
+   complexity in both the specification and client implimentations.
 
-6.  IANA Considerations
+7.  IANA Considerations
 
    This document makes no requests of IANA.
 
-7.  Security Considerations
+8.  Security Considerations
 
-   As this document is intended to create discussion and consensus and
+   As this document is intended to guide discussion and consensus, it
    introduces no security considerations of its own.
 
-8.  References
+9.  References
 
-8.1.  Normative References
+9.1.  Normative References
 
    [I-D.draft-ietf-mops-streaming-opcons]
               Holland, J., Begen, A., and S. Dawkins, "Operational
@@ -405,7 +414,7 @@ Table of Contents
               DOI 10.17487/RFC9000, May 2021,
               <https://datatracker.ietf.org/doc/html/rfc9000>.
 
-8.2.  Informative References
+9.2.  Informative References
 
    [I-D.draft-engelbart-rtp-over-quic]
               Ott, J. and M. Engelbart, "RTP over QUIC", Work in
@@ -462,10 +471,24 @@ Table of Contents
 
 Appendix A.  Acknowledgements
 
-   The author would like the thank the many draft authors of various
-   specifications for their work.  The author would also like to thank
-   Francesco Illy and Nicholas Book for their part in providing the
-   needed motivation.
+   The authors would like the thank the many authors of of the
+   specifications referenced in Section 3 for their work:
+
+   *  Alan Frindell
+   *  Colin Perkins
+   *  Jake Weissman
+   *  Joerg Ott
+   *  Jordi Cenzano
+   *  Kirill Pugin
+   *  Maria Sharabayko
+   *  Mathis Engelbart
+   *  Maxim Sharabayko
+   *  Roni Even
+   *  Sam Hurst
+   *  Varun Singh
+
+   James Gruessing would also like to thank Francesco Illy and Nicholas
+   Book for their part in providing the needed motivation.
 
 Authors' Addresses
 
