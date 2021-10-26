@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2021-10-24T01:00:31.002646+00:00",
+  "timestamp": "2021-10-26T00:57:35.941829+00:00",
   "repo": "fiestajetsam/draft-gruessing-moq-requirements",
   "labels": [
     {
@@ -395,7 +395,7 @@
       "id": "PR_kwDOGMy9Pc4tk8Je",
       "title": "Further work and changes",
       "url": "https://github.com/fiestajetsam/draft-gruessing-moq-requirements/pull/15",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "fiestajetsam",
       "authorAssociation": "OWNER",
       "assignees": [
@@ -404,17 +404,55 @@
       "labels": [],
       "body": "",
       "createdAt": "2021-10-23T10:26:59Z",
-      "updatedAt": "2021-10-23T10:26:59Z",
+      "updatedAt": "2021-10-24T22:45:30Z",
       "baseRepository": "fiestajetsam/draft-gruessing-moq-requirements",
       "baseRefName": "main",
       "baseRefOid": "c305f01ffdfed423d7efd29504fba3cdc3f2f1ef",
       "headRepository": "fiestajetsam/draft-gruessing-moq-requirements",
       "headRefName": "authentication",
       "headRefOid": "95856d34c5114686f0b5e6100d45afc979429a6f",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2021-10-24T22:45:25Z",
+      "mergedAt": "2021-10-24T22:45:25Z",
+      "mergedBy": "SpencerDawkins",
+      "mergeCommit": {
+        "oid": "d81d937c84192b44c64ec77004a88f04ce60c8ff"
+      },
+      "comments": [
+        {
+          "author": "SpencerDawkins",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Hi, @fiestajetsam, I think this looks mostly fine (it looks like the abstract is a tiny bit garbled, but we can fix stuff like that in an editorial pass). Based on the changed title, I'm assuming that we aren't worrying about SRT and RUSH in this draft - that's probably a good call, because I don't think their requirements are going to look much like RTP over QUIC requirements. There will be some places that I will need to tighten up what I wrote, because they were still in scope when I was typing. I'll merge this, and see where I end up in an hour or two of typing. ",
+          "createdAt": "2021-10-24T22:45:18Z",
+          "updatedAt": "2021-10-24T22:45:18Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 16,
+      "id": "PR_kwDOGMy9Pc4tmK9b",
+      "title": "Update draft-gruessing-moq-requirements.md",
+      "url": "https://github.com/fiestajetsam/draft-gruessing-moq-requirements/pull/16",
+      "state": "MERGED",
+      "author": "SpencerDawkins",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This is mostly last-minute cleanup - please do the right thing, of course!",
+      "createdAt": "2021-10-25T00:29:42Z",
+      "updatedAt": "2021-10-25T13:08:54Z",
+      "baseRepository": "fiestajetsam/draft-gruessing-moq-requirements",
+      "baseRefName": "main",
+      "baseRefOid": "d81d937c84192b44c64ec77004a88f04ce60c8ff",
+      "headRepository": "fiestajetsam/draft-gruessing-moq-requirements",
+      "headRefName": "spencer-last-minute",
+      "headRefOid": "a88cdedd665a6d4fc027d5bae5cbf17de0f4eee2",
+      "closedAt": "2021-10-25T13:08:51Z",
+      "mergedAt": "2021-10-25T13:08:51Z",
+      "mergedBy": "fiestajetsam",
+      "mergeCommit": {
+        "oid": "1edcf7303f6a9c43bf820de0d70ca3fd0fb025a9"
+      },
       "comments": [],
       "reviews": []
     }
